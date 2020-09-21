@@ -1,42 +1,34 @@
-import { Component, OnInit } from '@angular/core';
-import { Meta } from '@angular/platform-browser';
-import {ajaxGetJSON} from 'rxjs/internal-compatibility';
+import {Component, OnInit} from '@angular/core';
 import {JsonReaderService} from '../_services/json-reader.service';
+import {WeatherJSON} from '../_models/weather-json';
 
 @Component({
   selector: 'app-location',
   templateUrl: './location.component.html',
   styles: [
-  ]
+  ],
 })
 export class LocationComponent implements OnInit {
-  public lat = 0;
-  public long = 0;
-  public url = 'https://api.weather.gov/points/';
-  public weatherJSON = {};
-  constructor() {}
+  public url = '';
+  public weatherJSON: WeatherJSON;
+
+  constructor(private jsonReaderService: JsonReaderService) {
+  }
 
   ngOnInit(): void {
   }
 
-  getLocation(): void{
-    navigator.geolocation.getCurrentPosition(position => {
-      this.lat = position.coords.latitude;
-      this.long = position.coords.longitude;
-      this.url += this.lat + ',' + this.long;
+  getURL(): void{
+    this.jsonReaderService.getLocation().then(res => {
+      this.url = res;
     });
   }
 
-  update(): void{
-    if (this.url === 'https://api.weather.gov/points/'){
-      console.log('please get location');
+  getInitialJson(): void{
+    this.jsonReaderService.getInitialJson(this.url).then((res: WeatherJSON) => {
+      this.weatherJSON = res;
+      console.log(this.weatherJSON.properties.relativeLocation.properties.city);
+    });
     }
-    else {
-      fetch(this.url)
-        .then(res => res.json())
-        .then(out => this.weatherJSON = out);
-    }
-    console.log(this.weatherJSON);
-  }
 
 }
