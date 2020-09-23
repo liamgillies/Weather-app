@@ -1,7 +1,7 @@
 <section class="home">
   <div class="container">
     <div class="text">
-      <p>Welcome to my Weather App!
+      Welcome to my Weather App!
         <br/>
         Here is the
         <u>
@@ -9,8 +9,10 @@
           </u>
         if you're interested, otherwise
         <br/>
-        <button class="btn btn-primary btn-lg" [routerLink]="['home']" routerLinkActive="active">Proceed</button>
-      </p>
+        <button id="proceed" class="btn btn-primary btn-lg" (click)="getJSON()"
+                [routerLink]="homeLinkEnabled ? '/home' : null">Proceed</button>
+        <br/>
+        <div id="subtitle">You will need to enable your location</div>
     </div>
   </div>
 </section>

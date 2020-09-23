@@ -17,7 +17,7 @@ export class JsonReaderService {
           return resolve('https://api.weather.gov/points/' +
             position.coords.latitude + ',' +
             position.coords.longitude,
-        );}
+        ); }
         else{
           return reject('');
         }
@@ -25,7 +25,7 @@ export class JsonReaderService {
     });
   }
 
-  getInitialJson(url: string): Promise<object> {
+  getInitialJson(url: string): Promise<void> {
     return new Promise((resolve, reject) => {
       if (url === '') {
         reject('Location not fetched');
@@ -33,7 +33,7 @@ export class JsonReaderService {
         fetch(url)
           .then(res => res.json())
           .then(out => {
-            resolve(out);
+            resolve(this.weatherJSON = out);
           });
       }
     });

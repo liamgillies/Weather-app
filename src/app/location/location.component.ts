@@ -18,17 +18,8 @@ export class LocationComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getURL(): void{
-    this.jsonReaderService.getLocation().then(res => {
-      this.url = res;
-    });
+  service(): void {
+    console.log(this.jsonReaderService.weatherJSON);
   }
-
-  getInitialJson(): void{
-    this.jsonReaderService.getInitialJson(this.url).then((res: WeatherJSON) => {
-      this.weatherJSON = res;
-      console.log(this.weatherJSON.properties.relativeLocation.properties.city);
-    });
-    }
 
 }

@@ -7,11 +7,17 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LandingComponent } from './landing/landing.component';
 import { AppRoutingModule } from './app-routing.module';
+import { NavbarComponent } from './navbar/navbar.component';
+import { WeatherCardTodayComponent } from './weather-card-today/weather-card-today.component';
+import { TodayComponent } from './today/today.component';
 @NgModule({
   declarations: [
     AppComponent,
     LocationComponent,
-    LandingComponent
+    LandingComponent,
+    NavbarComponent,
+    WeatherCardTodayComponent,
+    TodayComponent
   ],
   imports: [
     BrowserModule,

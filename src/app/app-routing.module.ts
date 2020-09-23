@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule} from '@angular/router';
 import {LandingComponent} from './landing/landing.component';
 import {LocationComponent} from './location/location.component';
+import {TodayComponent} from './today/today.component';
 
 const routes: Routes = [
   {path: '', component: LandingComponent},
-  { path: '**', redirectTo: 'home' },
-  {path: 'home', component: LocationComponent}
+  {path: 'home', component: LocationComponent},
+  {path: 'today', component: TodayComponent}
 ];
 
 @NgModule({

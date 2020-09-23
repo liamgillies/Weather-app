@@ -12,8 +12,6 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
-p,a {
   text-align: center;
   font-family: "Quicksand", sans-serif;
   font-size: 32px;
@@ -21,8 +19,15 @@ p,a {
   word-spacing: 2px;
   line-height: 46px;
 }
-
+a {
+  color: white;
+}
 .btn {
-  outline: none;
-  width: 25%;
+  width: 200px;
+}
+#subtitle{
+  font-size: 10px;
+  margin-top: -15px;
+  word-spacing: 0px;
+  width: 100%;
 }
