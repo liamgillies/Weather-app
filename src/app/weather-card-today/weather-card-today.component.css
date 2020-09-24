@@ -1,1 +1,77 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
+.bg {
+  background: url(https://thumbs.gfycat.com/QueasyRecentEmperorshrimp-size_restricted.gif);
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+}
+.card-container {
+  position: relative;
+  width: 55%;
+  padding-bottom: 25%;
+  float: left;
+  height: 0;
+  left: 50%;
+  transform: translate(-50%, 40%);
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: 15px;
+  background: url(https://www.xmple.com/wallpaper/grey-blue-gradient-linear-1920x1080-c2-808080-4682b4-a-45-f-14.svg);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.text-container {
+  margin: 10px;
+  /*border: 2px dotted orange;*/
+}
+
+.location {
+  text-align: center;
+  font-size: 24px;
+  color: white;
+  margin-top: -10px;
+}
+.temperature {
+  font-size: 36px;
+  color: white;
+  margin-left: 10px;
+  top: 10px;
+  width: 15%;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+form {
+  margin-left: 156px;
+  margin-top: -43px;
+  color: white;
+  width: 43px;
+  padding: 3px;
+  border-style: outset;
+  border-radius: 13px;
+}
+.progress-wrapper {
+  margin-top: 98px;
+}
+.progress span{
+  text-align: right;
+  color: black;
+  font-size: 18px;
+}
+.progress-bar {
+  border-right: 3px solid black;
+}
+#date {
+  text-align: right;
+}
+.progress {
+  height: 10px;
+}
+
+
+

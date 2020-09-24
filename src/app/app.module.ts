@@ -10,20 +10,25 @@ import { AppRoutingModule } from './app-routing.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { WeatherCardTodayComponent } from './weather-card-today/weather-card-today.component';
 import { TodayComponent } from './today/today.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressBarModule} from '@angular/material/progress-bar';
+
 @NgModule({
   declarations: [
     AppComponent,
     LocationComponent,
     LandingComponent,
     NavbarComponent,
+    TodayComponent,
     WeatherCardTodayComponent,
-    TodayComponent
   ],
   imports: [
     BrowserModule,
     MatToolbarModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    MatCardModule,
+    MatProgressBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

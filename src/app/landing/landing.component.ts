@@ -9,6 +9,7 @@ import {JsonReaderService} from '../_services/json-reader.service';
   styles: [
   ]
 })
+
 export class LandingComponent implements OnInit {
   public homeLinkEnabled = false;
   private element: HTMLElement;
