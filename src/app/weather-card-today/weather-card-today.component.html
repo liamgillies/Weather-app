@@ -20,13 +20,24 @@
           °C
         </form>
       </div>
-      <img *ngIf="(icon=='Clear' || icon=='Sunny') && isDayTime" class="weather-img" src="../../assets/sunny.png" width="130px" height="130px">
-      <img *ngIf="(icon=='Clear' || icon=='Sunny') && !isDayTime" class="weather-img" src="../../assets/nightsunny.png" width="130px" height="130px">
+      <img *ngIf="(icon=='Clear' || icon=='Sunny' || icon=='Mostly Sunny' || icon=='Mostly Clear') && isDayTime" class="weather-img" src="../../assets/sunny.png" width="130px" height="130px">
+      <img *ngIf="(icon=='Clear' || icon=='Sunny' || icon=='Mostly Sunny' || icon=='Mostly Clear') && !isDayTime" class="weather-img-night" src="../../assets/nightsunny.png" width="130px" height="130px">
+      <img *ngIf="(icon=='Partly Sunny' || icon=='Mostly Cloudy' || icon=='Cloudy' || icon=='Increasing Clouds' || icon=='Decreasing Clouds' || icon=='Clearing' || icon=='Gradual Clearing' || icon=='Clearing Late' || icon=='Becoming Cloudy') && isDayTime" class="weather-img" src="../../assets/sunwithclouds.png" width="130px" height="130px">
+      <img *ngIf="(icon=='Partly Sunny' ||  icon=='Decreasing Clouds' || icon=='Clearing' || icon=='Gradual Clearing' || icon=='Clearing Late' || icon=='Becoming Cloudy') && !isDayTime" class="weather-img-night" src="../../assets/nightwithclouds.png" width="130px" height="130px">
+      <img *ngIf="(icon=='Mostly Cloudy' || icon=='Cloudy' || icon=='Increasing Clouds') && isDayTime" class="weather-img" src="../../assets/cloudy.png" width="130px" height="130px">
+      <img *ngIf="(icon=='Mostly Cloudy' || icon=='Cloudy' || icon=='Increasing Clouds') && !isDayTime" class="weather-img-night" src="../../assets/cloudy.png" width="130px" height="130px">
+      <img *ngIf="(icon=='Rain' || icon=='Slight Chance Rain Showers' || icon=='Chance Rain Showers' || icon=='Rain Showers Likely' || icon=='Rain Showers' || icon=='Slight Chance Rain' || icon=='Chance Rain' || icon=='Rain Likely' || icon=='Rain' || icon=='Heavy Rain' || icon=='Slight Chance Drizzle' || icon=='Chance Drizzle' || icon=='Drizzle Likely' || icon=='Drizzle') && isDayTime" class="weather-img" src="../../assets/rain.png" width="130px" height="130px">
+      <img *ngIf="(icon=='Rain' || icon=='Slight Chance Rain Showers' || icon=='Chance Rain Showers' || icon=='Rain Showers Likely' || icon=='Rain Showers' || icon=='Slight Chance Rain' || icon=='Chance Rain' || icon=='Rain Likely' || icon=='Rain' || icon=='Heavy Rain' || icon=='Slight Chance Drizzle' || icon=='Chance Drizzle' || icon=='Drizzle Likely' || icon=='Drizzle') && isDayTime" class="weather-img-night" src="../../assets/rain.png" width="130px" height="130px">
+      <img *ngIf="(icon=='Slight Chance Snow Showers' || icon=='Chance Snow Showers' || icon=='Snow Showers Likely' || icon=='Snow Showers' || icon=='Slight Chance Flurries' || icon=='Chance Flurries' || icon=='Flurries Likely' || icon=='Flurries' || icon=='Slight Chance Snow' || icon=='Chance Snow' || icon=='Snow Likely' || icon=='Snow' || icon=='Blizzard') && isDayTime" class="weather-img" src="../../assets/snow.png" width="130px" height="130px">
+      <img *ngIf="(icon=='Slight Chance Snow Showers' || icon=='Chance Snow Showers' || icon=='Snow Showers Likely' || icon=='Snow Showers' || icon=='Slight Chance Flurries' || icon=='Chance Flurries' || icon=='Flurries Likely' || icon=='Flurries' || icon=='Slight Chance Snow' || icon=='Chance Snow' || icon=='Snow Likely' || icon=='Snow' || icon=='Blizzard') && isDayTime" class="weather-img-night" src="../../assets/snow.png" width="130px" height="130px">
+      <img *ngIf="(icon=='Slight Chance Rain/Snow' || icon=='Chance Rain/Snow' || icon=='Rain/Snow Likely' || icon=='Rain/Snow') && isDayTime" class="weather-img" src="../../assets/rainsnow.png" width="130px" height="130px">
+      <img *ngIf="(icon=='Slight Chance Rain/Snow' || icon=='Chance Rain/Snow' || icon=='Rain/Snow Likely' || icon=='Rain/Snow') && !isDayTime" class="weather-img-night" src="../../assets/rainsnow.png" width="130px" height="130px">
+      <img *ngIf="(icon=='Isolated Thunderstorms' || icon=='Slight Chance Thunderstorms' || icon=='Chance Thunderstorms' || icon=='Thunderstorms Likely' || icon=='Thunderstorms' || icon=='Severe Tstms') && isDayTime" class="weather-img" src="../../assets/thunderday.png" width="130px" height="130px">
+      <img *ngIf="(icon=='Isolated Thunderstorms' || icon=='Slight Chance Thunderstorms' || icon=='Chance Thunderstorms' || icon=='Thunderstorms Likely' || icon=='Thunderstorms' || icon=='Severe Tstms') && !isDayTime" class="weather-img-night" src="../../assets/thundernight.png" width="130px" height="130px">
 
       <div class="progress-wrapper">
         <div class="progress">
-          <div class="progress-bar" [style.width.%]=time role="progressbar" aria-valuemin="0" aria-valuemax="24">
-          </div>
+          <div class="progress-bar" [style.width.%]=time role="progressbar" aria-valuemin="0" aria-valuemax="24"></div>
         </div>
       </div>
       <span id="date" [style.width.%]=(time+3.5)>{{date | date: "h:mm a"}}</span>
@@ -46,6 +57,8 @@
       <span id="sixPM-bar"></span>
       <span class="ninePM">9pm</span>
       <span id="ninePM-bar"></span>
+      <span class="twelveAM-2">12am</span>
+      <span id="twelveAM-bar-2"></span>
     </div>
   </div>
 </section>

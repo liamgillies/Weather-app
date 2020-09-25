@@ -31,7 +31,7 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
         if (this.icon || this.isDayTime) {
           clearInterval(iconInterval);
         }
-      }, 60000);
+      }, 30000);
   }
 
   ngOnDestroy(): void {

@@ -12,6 +12,7 @@ import { WeatherCardTodayComponent } from './weather-card-today/weather-card-tod
 import { TodayComponent } from './today/today.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule} from '@angular/material/progress-bar';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { MatProgressBarModule} from '@angular/material/progress-bar';
     AppRoutingModule,
     MatCardModule,
     MatProgressBarModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
