@@ -56,7 +56,7 @@ form {
   border-radius: 13px;
 }
 .progress-wrapper {
-  margin-top: 98px;
+  margin-top: 80px;
 }
 .progress span{
   text-align: right;
@@ -68,10 +68,116 @@ form {
 }
 #date {
   text-align: right;
+  color: white;
 }
 .progress {
   height: 10px;
 }
-
-
-
+.twelveAM {
+  font-size: 12px;
+  color: antiquewhite;
+}
+#twelveAM-bar {
+  border-left: 2px solid darkgray;
+  height: 10px;
+  margin-top: -44px;
+  border-radius: 1px;
+}
+.threeAM {
+  margin-top: 20px;
+  margin-left: 11%;
+  font-size: 12px;
+  color: antiquewhite;
+}
+#threeAM-bar {
+  margin-left: 12.5%;
+  border-left: 2px solid darkgray;
+  height: 10px;
+  margin-top: -44px;
+  border-radius: 1px;
+}
+.sixAM {
+  margin-top: 19.5px;
+  margin-left: 23.5%;
+  font-size: 12px;
+  color: antiquewhite;
+}
+#sixAM-bar {
+  margin-left: 25%;
+  border-left: 2px solid darkgray;
+  height: 10px;
+  margin-top: -44px;
+  border-radius: 1px;
+}
+.nineAM {
+  margin-top: 19.5px;
+  margin-left: 36%;
+  font-size: 12px;
+  color: antiquewhite;
+}
+#nineAM-bar {
+  margin-left: 37.5%;
+  border-left: 2px solid darkgray;
+  height: 10px;
+  margin-top: -44px;
+  border-radius: 1px;
+}
+.twelvePM {
+  margin-top: 20px;
+  margin-left: 48%;
+  font-size: 12px;
+  color: antiquewhite;
+}
+#twelvePM-bar {
+  margin-left: 50%;
+  border-left: 2px solid darkgray;
+  height: 10px;
+  margin-top: -44px;
+  border-radius: 1px;
+}
+.threePM {
+  margin-top: 19.5px;
+  margin-left: 61%;
+  font-size: 12px;
+  color: antiquewhite;
+}
+#threePM-bar {
+  margin-left: 62.5%;
+  border-left: 2px solid darkgray;
+  height: 10px;
+  margin-top: -44px;
+  border-radius: 1px;
+}
+.sixPM {
+  margin-top: 19.5px;
+  margin-left: 73.5%;
+  font-size: 12px;
+  color: antiquewhite;
+}
+#sixPM-bar {
+  margin-left: 75%;
+  border-left: 2px solid darkgray;
+  height: 10px;
+  margin-top: -44px;
+  border-radius: 1px;
+}
+.ninePM {
+  margin-top: 20px;
+  margin-left: 86%;
+  font-size: 12px;
+  color: antiquewhite;
+}
+#ninePM-bar {
+  margin-left: 87.5%;
+  border-left: 2px solid darkgray;
+  height: 10px;
+  margin-top: -44px;
+  border-radius: 1px;
+}
+.weather-img {
+  position: absolute;
+  margin-left: 70%;
+  margin-top: 1%;
+  border-radius: 30px;
+  background: lightcyan;
+}

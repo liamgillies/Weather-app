@@ -20,6 +20,9 @@
           °C
         </form>
       </div>
+      <img *ngIf="(icon=='Clear' || icon=='Sunny') && isDayTime" class="weather-img" src="../../assets/sunny.png" width="130px" height="130px">
+      <img *ngIf="(icon=='Clear' || icon=='Sunny') && !isDayTime" class="weather-img" src="../../assets/nightsunny.png" width="130px" height="130px">
+
       <div class="progress-wrapper">
         <div class="progress">
           <div class="progress-bar" [style.width.%]=time role="progressbar" aria-valuemin="0" aria-valuemax="24">
@@ -27,6 +30,22 @@
         </div>
       </div>
       <span id="date" [style.width.%]=(time+3.5)>{{date | date: "h:mm a"}}</span>
+      <span class="twelveAM">12am</span>
+      <span id="twelveAM-bar"></span>
+      <span class="threeAM">3am</span>
+      <span id="threeAM-bar"></span>
+      <span class="sixAM">6am</span>
+      <span id="sixAM-bar"></span>
+      <span class="nineAM">9am</span>
+      <span id="nineAM-bar"></span>
+      <span class="twelvePM">12pm</span>
+      <span id="twelvePM-bar"></span>
+      <span class="threePM">3pm</span>
+      <span id="threePM-bar"></span>
+      <span class="sixPM">6pm</span>
+      <span id="sixPM-bar"></span>
+      <span class="ninePM">9pm</span>
+      <span id="ninePM-bar"></span>
     </div>
   </div>
 </section>

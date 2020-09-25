@@ -13,14 +13,24 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
   public inC = false;
   public inF = true;
   public fTemp;
+  public icon;
+  public isDayTime;
   constructor(public jsonReaderService: JsonReaderService) {
   }
 
   ngOnInit(): void {
+    const iconInterval = setInterval(() => {
+      this.icon = this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast;
+      this.isDayTime = this.jsonReaderService.hourlyJSON.properties.periods[0].isDaytime;
+      },
+      100);
     const d = new Date();
     this.time = ((d.getHours() * 60 + d.getMinutes()) * 100) / 1440;
     this.interval = setInterval(() => {
         this.time = ((d.getHours() * 60 + d.getMinutes()) * 100) / 1440;
+        if (this.icon || this.isDayTime) {
+          clearInterval(iconInterval);
+        }
       }, 60000);
   }
 
