@@ -13,6 +13,7 @@ import { TodayComponent } from './today/today.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule} from '@angular/material/progress-bar';
 import { CommonModule } from '@angular/common';
+import { Nl2BrPipeModule } from 'nl2br-pipe';
 
 @NgModule({
   declarations: [
@@ -30,9 +31,10 @@ import { CommonModule } from '@angular/common';
     AppRoutingModule,
     MatCardModule,
     MatProgressBarModule,
-    CommonModule
+    CommonModule,
+    Nl2BrPipeModule
   ],
-  providers: [],
+  providers: [Nl2BrPipeModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {WeatherJSON} from '../_models/weather-json';
 import {HourlyJSON} from '../_models/hourly-json';
+import {SingleHour} from '../_models/single-hour';
 
 @Injectable({
   providedIn: 'any'
@@ -10,12 +11,17 @@ export class JsonReaderService {
   public long = 0;
   public weatherJSON: WeatherJSON;
   public hourlyJSON: HourlyJSON;
+  public nextTwelveHours: SingleHour[] = [];
+  public url = '';
   constructor() { }
 
   getLocation(): Promise<string> {
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(position => {
         if (position) {
+          this.url = 'https://api.weather.gov/points/' +
+            position.coords.latitude + ',' +
+            position.coords.longitude;
           return resolve('https://api.weather.gov/points/' +
             position.coords.latitude + ',' +
             position.coords.longitude,
@@ -50,9 +56,34 @@ export class JsonReaderService {
           .then(res => res.json())
           .then(out => {
             resolve(this.hourlyJSON = out);
-            console.log(this.hourlyJSON);
           });
       }
     });
+  }
+
+  getNextTwelveHours(): SingleHour[] {
+    if (this.nextTwelveHours.length === 0) {
+      for (let i = 1; i < 13; i++) {
+        this.nextTwelveHours.push(this.hourlyJSON.properties.periods[i]);
+      }
+    }
+    return this.nextTwelveHours;
+  }
+
+  getHighLow(): string {
+    let min = this.hourlyJSON.properties.periods[0].temperature;
+    let max = this.hourlyJSON.properties.periods[0].temperature;
+    for (const ele of this.hourlyJSON.properties.periods){
+      if (ele.startTime.substring(11, 13) === '00'){
+          return 'Today will have a high of ' + max + '\n and a low of ' + min;
+      }
+      if (ele.temperature > max){
+        max = ele.temperature;
+      }
+      if (ele.temperature < min){
+        min = ele.temperature;
+      }
+    }
+    return '';
   }
 }

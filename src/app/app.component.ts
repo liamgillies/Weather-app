@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import {NavigationStart, Router} from '@angular/router';
-import {JsonReaderService} from './_services/json-reader.service';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

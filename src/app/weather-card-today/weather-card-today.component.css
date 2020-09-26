@@ -1,4 +1,9 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
+@import url(http://db.onlinewebfonts.com/c/b2e75c336df191233b3096682c9ee6be?family=PixelarRegularW01-Regular);
+@import url(https://db.onlinewebfonts.com/c/b2e75c336df191233b3096682c9ee6be?family=PixelarRegularW01-Regular);
+.pixel-font{
+  font-family: PixelarRegularW01-Regular;
+}
 .bg {
   background: url(https://thumbs.gfycat.com/QueasyRecentEmperorshrimp-size_restricted.gif);
   width: 100%;
@@ -7,19 +12,18 @@
 }
 .card-container {
   position: relative;
-  width: 55%;
-  padding-bottom: 25%;
+  width: 700px;
+  top: 50%;
   float: left;
-  height: 0;
+  height: 350px;
   left: 50%;
-  transform: translate(-50%, 40%);
+  transform: translate(-50%, -50%);
 }
 
 .card {
   width: 100%;
   height: 100%;
   position: absolute;
-  border-radius: 15px;
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(5px);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -27,37 +31,38 @@
 
 .text-container {
   margin: 10px;
-  /*border: 2px dotted orange;*/
+  font-size: 20px;
 }
 
 .location {
   text-align: center;
-  font-size: 24px;
+  font-size: 38px;
   color: white;
-  margin-top: -10px;
+  margin-top: -15px;
 }
 .temperature {
+  position: absolute;
+  white-space: nowrap;
   font-size: 36px;
   color: white;
   margin-left: 10px;
-  top: 10px;
+  margin-top: 1px;
   width: 15%;
   padding: 10px;
-  font-family: Arial, sans-serif;
-  border-radius: 12px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: darkslateblue;
 }
 form {
-  margin-left: 156px;
-  margin-top: -43px;
+  position: absolute;
+  margin-top: 2px;
+  margin-left: 125px;
   color: white;
-  width: 43px;
+  width: 50px;
   padding: 3px;
   border-style: outset;
-  border-radius: 13px;
 }
 .progress-wrapper {
-  margin-top: 80px;
+  margin-top: 130px;
 }
 .progress span{
   text-align: right;
@@ -71,135 +76,197 @@ form {
   text-align: right;
   color: white;
   white-space: nowrap;
+  font-size: 24px;
 }
 .progress {
   height: 10px;
 }
 .twelveAM {
-  font-size: 12px;
+  font-size: 20px;
   color: antiquewhite;
+  margin-top: -50px;
 }
 #twelveAM-bar {
   border-left: 2px solid darkgray;
   height: 10px;
-  margin-top: -44px;
-  border-radius: 1px;
+  margin-top: -1px;
 }
 .threeAM {
-  margin-top: 20px;
+  margin-top: -28px;
   margin-left: 11%;
-  font-size: 12px;
+  font-size: 20px;
   color: antiquewhite;
 }
 #threeAM-bar {
   margin-left: 12.5%;
   border-left: 2px solid darkgray;
   height: 10px;
-  margin-top: -44px;
-  border-radius: 1px;
+  margin-top: -1px;
 }
 .sixAM {
-  margin-top: 19.5px;
+  margin-top: -27px;
   margin-left: 23.5%;
-  font-size: 12px;
+  font-size: 20px;
   color: antiquewhite;
 }
 #sixAM-bar {
   margin-left: 25%;
   border-left: 2px solid darkgray;
   height: 10px;
-  margin-top: -44px;
-  border-radius: 1px;
+  margin-top: -1px;
 }
 .nineAM {
-  margin-top: 19.5px;
+  margin-top: -28px;
   margin-left: 36%;
-  font-size: 12px;
+  font-size: 20px;
   color: antiquewhite;
 }
 #nineAM-bar {
   margin-left: 37.5%;
   border-left: 2px solid darkgray;
   height: 10px;
-  margin-top: -44px;
-  border-radius: 1px;
+  margin-top: -1px;
 }
 .twelvePM {
-  margin-top: 20px;
+  margin-top: -28px;
   margin-left: 48%;
-  font-size: 12px;
+  font-size: 20px;
   color: antiquewhite;
 }
 #twelvePM-bar {
   margin-left: 50%;
   border-left: 2px solid darkgray;
   height: 10px;
-  margin-top: -44px;
-  border-radius: 1px;
+  margin-top: -1px;
 }
 .threePM {
-  margin-top: 19.5px;
+  margin-top: -27px;
   margin-left: 61%;
-  font-size: 12px;
+  font-size: 20px;
   color: antiquewhite;
 }
 #threePM-bar {
   margin-left: 62.5%;
   border-left: 2px solid darkgray;
   height: 10px;
-  margin-top: -44px;
-  border-radius: 1px;
+  margin-top: -1px;
 }
 .sixPM {
-  margin-top: 19.5px;
+  margin-top: -28px;
   margin-left: 73.5%;
-  font-size: 12px;
+  font-size: 20px;
   color: antiquewhite;
 }
 #sixPM-bar {
   margin-left: 75%;
   border-left: 2px solid darkgray;
   height: 10px;
-  margin-top: -44px;
-  border-radius: 1px;
+  margin-top: -1px;
 }
 .ninePM {
-  margin-top: 20px;
+  margin-top: -28px;
   margin-left: 86%;
-  font-size: 12px;
+  font-size: 20px;
   color: antiquewhite;
 }
 #ninePM-bar {
   margin-left: 87.5%;
   border-left: 2px solid darkgray;
   height: 10px;
-  margin-top: -44px;
-  border-radius: 1px;
+  margin-top: -1px;
 }
 .twelveAM-2 {
-  margin-top: 20px;
+  margin-top: -27px;
   margin-left: 95.5%;
-  font-size: 12px;
-  color: antiquewhite;
+  font-size: 20px;
+  color: lightgrey;
+  white-space: nowrap;
 }
 #twelveAM-bar-2 {
   margin-left: 99.7%;
   border-left: 2px solid darkgray;
   height: 10px;
-  margin-top: -44px;
-  border-radius: 1px;
+  margin-top: -1px;
 }
 .weather-img {
   position: absolute;
-  margin-left: 70%;
-  margin-top: 1%;
-  border-radius: 30px;
-  background: lightcyan;
+  margin-left: 78%;
+  margin-top: 20px;
+  border-radius: 5px;
+  background: lightblue;
+  width: 120px;
+  height: 120px;
 }
 .weather-img-night {
   position: absolute;
   margin-left: 70%;
-  margin-top: 2%;
-  border-radius: 30px;
+  margin-top: 32px;
   background: darkslateblue;
+  height: 120px;
+  width: 120px;
+}
+.future-hours {
+  margin-left: 2.5%;
+  width: 95%;
+  margin-top: 25px;
+  height: 30%;
+  overflow: auto;
+  white-space: nowrap;
+  color: antiquewhite;
+}
+::-webkit-scrollbar {
+  width: 18px;
+  background-color: #F5F5F5;
+}
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 10px;
+  background-color: lightgray;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: rebeccapurple;
+}
+.hours {
+  width: 200px;
+  display: inline-block;
+  height: 100%;
+  background: rgba(0,0,0,0.25);
+  margin-right: 5px;
+}
+.head {
+  display: block;
+  width: 200px;
+  text-align: center;
+  font-size: 20px;
+}
+.hour-temp {
+  font-size: 30px;
+  margin-left: 12px;
+}
+.weather-img-small{
+  width: 65px;
+  height: 65px;
+  margin-top: -30px;
+  margin-left: 135px;
+}
+.weather-img-small-night{
+  width: 65px;
+  height: 65px;
+  margin-top: -30px;
+  margin-left: 135px;
+}
+.short-forecast {
+  display: block;
+  text-align: center;
+  font-size: 16px;
+}
+.long-forecast{
+  position: absolute;
+  width: 100%;
+  margin-top: 55px;
+  text-align: center;
+  color: white;
+  font-size: 24px;
 }

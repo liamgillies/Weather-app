@@ -1,4 +1,6 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
+@import url(http://db.onlinewebfonts.com/c/b2e75c336df191233b3096682c9ee6be?family=PixelarRegularW01-Regular);
+@import url(https://db.onlinewebfonts.com/c/b2e75c336df191233b3096682c9ee6be?family=PixelarRegularW01-Regular);
 
 .home {
   width: 100%;
@@ -13,8 +15,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  font-family: "Quicksand", sans-serif;
-  font-size: 32px;
+  font-family: PixelarRegularW01-Regular;
+  font-size: 48px;
   color: white;
   word-spacing: 2px;
   line-height: 46px;
@@ -24,9 +26,10 @@ a {
 }
 .btn {
   width: 200px;
+  font-size: 26px;
 }
 #subtitle{
-  font-size: 10px;
+  font-size: 18px;
   margin-top: -15px;
   word-spacing: 0px;
   width: 100%;
