@@ -1,89 +1,77 @@
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pixelar">
-<section class="bg">
-  <div class="card-container">
-    <div class="card pixel-font">
-      <div class="text-container">
-        <div class="location">{{jsonReaderService.weatherJSON.properties.relativeLocation.properties.city}}
-        , {{jsonReaderService.weatherJSON.properties.relativeLocation.properties.state}}</div>
-        <span *ngIf="inF" class="temperature">
-          {{jsonReaderService.hourlyJSON.properties.periods[0].temperature}} °F
-        </span>
-        <span *ngIf="inC" class="temperature">
-          {{jsonReaderService.hourlyJSON.properties.periods[0].temperature}} °C
-        </span>
-        <form>
-          <input type="radio" id="F" name="temp" checked (click)="convertToF()">
-          <label for="F"></label>
-          °F
-          <br/>
-          <input type="radio" id="C" name="temp" (click)="convertToC()">
-          <label for="C"></label>
-          °C
-        </form>
-      </div>
-      <span class="long-forecast" [innerHTML]="highLow | nl2br"></span>
-      <img *ngIf="(icon=='Clear' || icon=='Sunny' || icon=='Mostly Sunny' || icon=='Mostly Clear') && isDayTime" class="weather-img" src="../../assets/sunny.png">
-      <img *ngIf="(icon=='Clear' || icon=='Sunny' || icon=='Mostly Sunny' || icon=='Mostly Clear') && !isDayTime" class="weather-img-night" src="../../assets/nightsunny.png">
-      <img *ngIf="(icon=='Partly Sunny' || icon=='Mostly Cloudy' || icon=='Cloudy' || icon=='Increasing Clouds' || icon=='Decreasing Clouds' || icon=='Clearing' || icon=='Gradual Clearing' || icon=='Clearing Late' || icon=='Becoming Cloudy') && isDayTime" class="weather-img" src="../../assets/sunwithclouds.png">
-      <img *ngIf="(icon=='Partly Sunny' ||  icon=='Decreasing Clouds' || icon=='Clearing' || icon=='Gradual Clearing' || icon=='Clearing Late' || icon=='Becoming Cloudy') && !isDayTime" class="weather-img-night" src="../../assets/nightwithclouds.png">
-      <img *ngIf="(icon=='Mostly Cloudy' || icon=='Cloudy' || icon=='Increasing Clouds') && isDayTime" class="weather-img" src="../../assets/cloudy.png">
-      <img *ngIf="(icon=='Mostly Cloudy' || icon=='Cloudy' || icon=='Increasing Clouds') && !isDayTime" class="weather-img-night" src="../../assets/cloudy.png">
-      <img *ngIf="(icon=='Rain' || icon=='Slight Chance Rain Showers' || icon=='Chance Rain Showers' || icon=='Rain Showers Likely' || icon=='Rain Showers' || icon=='Slight Chance Rain' || icon=='Chance Rain' || icon=='Rain Likely' || icon=='Rain' || icon=='Heavy Rain' || icon=='Slight Chance Drizzle' || icon=='Chance Drizzle' || icon=='Drizzle Likely' || icon=='Drizzle') && isDayTime" class="weather-img" src="../../assets/rain.png">
-      <img *ngIf="(icon=='Rain' || icon=='Slight Chance Rain Showers' || icon=='Chance Rain Showers' || icon=='Rain Showers Likely' || icon=='Rain Showers' || icon=='Slight Chance Rain' || icon=='Chance Rain' || icon=='Rain Likely' || icon=='Rain' || icon=='Heavy Rain' || icon=='Slight Chance Drizzle' || icon=='Chance Drizzle' || icon=='Drizzle Likely' || icon=='Drizzle') && !isDayTime" class="weather-img-night" src="../../assets/rain.png">
-      <img *ngIf="(icon=='Slight Chance Snow Showers' || icon=='Chance Snow Showers' || icon=='Snow Showers Likely' || icon=='Snow Showers' || icon=='Slight Chance Flurries' || icon=='Chance Flurries' || icon=='Flurries Likely' || icon=='Flurries' || icon=='Slight Chance Snow' || icon=='Chance Snow' || icon=='Snow Likely' || icon=='Snow' || icon=='Blizzard') && isDayTime" class="weather-img" src="../../assets/snow.png">
-      <img *ngIf="(icon=='Slight Chance Snow Showers' || icon=='Chance Snow Showers' || icon=='Snow Showers Likely' || icon=='Snow Showers' || icon=='Slight Chance Flurries' || icon=='Chance Flurries' || icon=='Flurries Likely' || icon=='Flurries' || icon=='Slight Chance Snow' || icon=='Chance Snow' || icon=='Snow Likely' || icon=='Snow' || icon=='Blizzard') && !isDayTime" class="weather-img-night" src="../../assets/snow.png">
-      <img *ngIf="(icon=='Slight Chance Rain/Snow' || icon=='Chance Rain/Snow' || icon=='Rain/Snow Likely' || icon=='Rain/Snow') && isDayTime" class="weather-img" src="../../assets/rainsnow.png">
-      <img *ngIf="(icon=='Slight Chance Rain/Snow' || icon=='Chance Rain/Snow' || icon=='Rain/Snow Likely' || icon=='Rain/Snow') && !isDayTime" class="weather-img-night" src="../../assets/rainsnow.png">
-      <img *ngIf="(icon=='Isolated Thunderstorms' || icon=='Slight Chance Thunderstorms' || icon=='Chance Thunderstorms' || icon=='Thunderstorms Likely' || icon=='Thunderstorms' || icon=='Severe Tstms') && isDayTime" class="weather-img" src="../../assets/thunderday.png">
-      <img *ngIf="(icon=='Isolated Thunderstorms' || icon=='Slight Chance Thunderstorms' || icon=='Chance Thunderstorms' || icon=='Thunderstorms Likely' || icon=='Thunderstorms' || icon=='Severe Tstms') && !isDayTime" class="weather-img-night" src="../../assets/thundernight.png">
+<div *ngIf="jsonReaderService.weatherJSON">
+  <section [ngClass]="{'bg-rain': isRain, 'bg-sun': isSun, 'bg-snow': isSnow, 'bg-missing': missing}">
+    <div class="card-container">
+      <div class="card pixel-font">
+        <div class="text-container">
+          <div class="location">{{jsonReaderService.weatherJSON.properties.relativeLocation.properties.city}},
+            {{jsonReaderService.weatherJSON.properties.relativeLocation.properties.state}}</div>
+          <span class="temperature" *ngIf="jsonReaderService.hourlyJSON">
+            {{jsonReaderService.hourlyJSON.properties.periods[0].temperature}} °F
+          </span>
+        </div>
+        <span class="long-forecast" [innerHTML]="highLow | nl2br"></span>
+        <img *ngIf="(isSun || icon=='Clear' || icon=='Haze' || icon=='Mostly Clear') && isDayTime" class="weather-img" src="../../assets/sunny.png">
+        <img *ngIf="(isSun || icon=='Clear' || icon=='Haze' || icon=='Mostly Clear') && !isDayTime" class="weather-img-night" src="../../assets/nightsunny.png">
+        <img *ngIf="(icon=='Mostly Cloudy' || icon=='Cloudy' || icon=='Increasing Clouds' || icon=='Decreasing Clouds' || icon=='Clearing' || icon=='Gradual Clearing' || icon=='Clearing Late' || icon=='Becoming Cloudy') && isDayTime" class="weather-img" src="../../assets/sunwithclouds.png">
+        <img *ngIf="(icon=='Decreasing Clouds' || icon=='Clearing' || icon=='Gradual Clearing' || icon=='Clearing Late' || icon=='Becoming Cloudy') && !isDayTime" class="weather-img-night" src="../../assets/nightwithclouds.png">
+        <img *ngIf="(icon=='Mostly Cloudy' || icon=='Cloudy' || icon=='Increasing Clouds') && isDayTime" class="weather-img" src="../../assets/cloudy.png">
+        <img *ngIf="(icon=='Mostly Cloudy' || icon=='Cloudy' || icon=='Increasing Clouds') && !isDayTime" class="weather-img-night" src="../../assets/cloudy.png">
+        <img *ngIf="isRain && !isSnow && isDayTime" class="weather-img" src="../../assets/rain.png">
+        <img *ngIf="isRain && !isSnow && !isDayTime" class="weather-img-night" src="../../assets/rain.png">
+        <img *ngIf="(isSnow || icon=='Slight Chance Flurries' || icon=='Chance Flurries' || icon=='Flurries Likely' || icon=='Flurries' || icon=='Blizzard') && isDayTime" class="weather-img" src="../../assets/snow.png">
+        <img *ngIf="(isSnow || icon=='Slight Chance Flurries' || icon=='Chance Flurries' || icon=='Flurries Likely' || icon=='Flurries' || icon=='Blizzard') && !isDayTime" class="weather-img-night" src="../../assets/snow.png">
+        <img *ngIf="isRain && isSnow && isDayTime" class="weather-img" src="../../assets/rainsnow.png">
+        <img *ngIf="isRain && isSnow && !isDayTime" class="weather-img-night" src="../../assets/rainsnow.png">
+        <img *ngIf="(icon=='Isolated Thunderstorms' || icon=='Slight Chance Thunderstorms' || icon=='Chance Thunderstorms' || icon=='Thunderstorms Likely' || icon=='Thunderstorms' || icon=='Severe Tstms') && isDayTime" class="weather-img" src="../../assets/thunderday.png">
+        <img *ngIf="(icon=='Isolated Thunderstorms' || icon=='Slight Chance Thunderstorms' || icon=='Chance Thunderstorms' || icon=='Thunderstorms Likely' || icon=='Thunderstorms' || icon=='Severe Tstms') && !isDayTime" class="weather-img-night" src="../../assets/thundernight.png">
 
-      <div class="progress-wrapper">
-        <div class="progress">
-          <div class="progress-bar" [style.width.%]=time role="progressbar" aria-valuemin="0" aria-valuemax="24"></div>
+        <div class="progress-wrapper">
+          <div class="progress">
+            <div class="progress-bar" [style.width.%]=time role="progressbar" aria-valuemin="0" aria-valuemax="24"></div>
+          </div>
+        </div>
+        <span id="date" [style.width.%]=(time+3.5)>{{date | date: "h:mm a"}}</span>
+        <span class="twelveAM">12am</span>
+        <span id="twelveAM-bar"></span>
+        <span class="threeAM">3am</span>
+        <span id="threeAM-bar"></span>
+        <span class="sixAM">6am</span>
+        <span id="sixAM-bar"></span>
+        <span class="nineAM">9am</span>
+        <span id="nineAM-bar"></span>
+        <span class="twelvePM">12pm</span>
+        <span id="twelvePM-bar"></span>
+        <span class="threePM">3pm</span>
+        <span id="threePM-bar"></span>
+        <span class="sixPM">6pm</span>
+        <span id="sixPM-bar"></span>
+        <span class="ninePM">9pm</span>
+        <span id="ninePM-bar"></span>
+        <span class="twelveAM-2">12am</span>
+        <span id="twelveAM-bar-2"></span>
+
+        <div class="future-hours" *ngIf="nextTwelveHours">
+          <span class="hours" *ngFor="let hour of nextTwelveHours">
+            <span class="mini-container">
+              <span class="head">{{getTime(hour)}}</span>
+              <div class="hour-temp">{{hour.temperature}} °F</div>
+              <img *ngIf="(hour.shortForecast=='Clear' || hour.shortForecast=='Haze' || hour.shortForecast=='Sunny' || hour.shortForecast=='Mostly Sunny' || hour.shortForecast=='Mostly Clear') && hour.isDaytime" class="weather-img-small" src="../../assets/sunny.png">
+              <img *ngIf="(hour.shortForecast=='Clear' || hour.shortForecast=='Haze' || hour.shortForecast=='Sunny' || hour.shortForecast=='Mostly Sunny' || hour.shortForecast=='Mostly Clear') && !hour.isDaytime" class="weather-img-small-night" src="../../assets/nightsunny.png">
+              <img *ngIf="(hour.shortForecast=='Partly Sunny' || hour.shortForecast=='Mostly Cloudy' || hour.shortForecast=='Cloudy' || hour.shortForecast=='Increasing Clouds' || hour.shortForecast=='Decreasing Clouds' || hour.shortForecast=='Clearing' || hour.shortForecast=='Gradual Clearing' || hour.shortForecast=='Clearing Late' || hour.shortForecast=='Becoming Cloudy') && hour.isDaytime" class="weather-img-small" src="../../assets/sunwithclouds.png">
+              <img *ngIf="(hour.shortForecast=='Partly Sunny' ||  hour.shortForecast=='Decreasing Clouds' || hour.shortForecast=='Clearing' || hour.shortForecast=='Gradual Clearing' || hour.shortForecast=='Clearing Late' || hour.shortForecast=='Becoming Cloudy') && !hour.isDaytime" class="weather-img-small-night" src="../../assets/nightwithclouds.png">
+              <img *ngIf="(hour.shortForecast=='Mostly Cloudy' ||  hour.shortForecast=='Cloudy' || hour.shortForecast=='Increasing Clouds') && hour.isDaytime" class="weather-img-small" src="../../assets/cloudy.png">
+              <img *ngIf="(hour.shortForecast=='Mostly Cloudy' || hour.shortForecast=='Cloudy' || hour.shortForecast=='Increasing Clouds') && !hour.isDaytime" class="weather-img-small-night" src="../../assets/cloudy.png">
+              <img *ngIf="hour.shortForecast.toLowerCase().includes('rain') && !hour.shortForecast.toLowerCase().includes('snow') && hour.isDaytime" class="weather-img-small" src="../../assets/rain.png">
+              <img *ngIf="hour.shortForecast.toLowerCase().includes('rain') && !hour.shortForecast.toLowerCase().includes('snow') && !hour.isDaytime" class="weather-img-small-night" src="../../assets/rain.png"><img *ngIf="(hour.shortForecast=='Slight Chance Snow Showers' || hour.shortForecast=='Chance Snow Showers' || hour.shortForecast=='Snow Showers Likely' || hour.shortForecast=='Snow Showers' || hour.shortForecast=='Slight Chance Flurries' || hour.shortForecast=='Chance Flurries' || hour.shortForecast=='Flurries Likely' || hour.shortForecast=='Flurries' || hour.shortForecast=='Slight Chance Snow' || hour.shortForecast=='Chance Snow' || hour.shortForecast=='Snow Likely' || hour.shortForecast=='Snow' || hour.shortForecast=='Blizzard') && !hour.isDaytime" class="weather-img-small-night" src="../../assets/snow.png">
+              <img *ngIf="hour.shortForecast.toLowerCase().includes('rain') && hour.shortForecast.toLowerCase().includes('snow') && hour.isDaytime" class="weather-img-small" src="../../assets/rainsnow.png">
+              <img *ngIf="hour.shortForecast.toLowerCase().includes('rain') && hour.shortForecast.toLowerCase().includes('snow') && !hour.isDaytime" class="weather-img-small-night" src="../../assets/rainsnow.png">
+              <img *ngIf="(hour.shortForecast=='Isolated Thunderstorms' || hour.shortForecast=='Slight Chance Thunderstorms' || hour.shortForecast=='Chance Thunderstorms' || hour.shortForecast=='Thunderstorms Likely' || hour.shortForecast=='Thunderstorms' || hour.shortForecast=='Severe Tstms') && hour.isDaytime" class="weather-img-small" src="../../assets/thunderday.png">
+              <img *ngIf="(hour.shortForecast=='Isolated Thunderstorms' || hour.shortForecast=='Slight Chance Thunderstorms' || hour.shortForecast=='Chance Thunderstorms' || hour.shortForecast=='Thunderstorms Likely' || hour.shortForecast=='Thunderstorms' || hour.shortForecast=='Severe Tstms') && !hour.isDaytime" class="weather-img-small-night" src="../../assets/thundernight.png">
+              <span class="short-forecast">{{hour.shortForecast}}</span>
+            </span>
+          </span>
         </div>
       </div>
-      <span id="date" [style.width.%]=(time+3.5)>{{date | date: "h:mm a"}}</span>
-      <span class="twelveAM">12am</span>
-      <span id="twelveAM-bar"></span>
-      <span class="threeAM">3am</span>
-      <span id="threeAM-bar"></span>
-      <span class="sixAM">6am</span>
-      <span id="sixAM-bar"></span>
-      <span class="nineAM">9am</span>
-      <span id="nineAM-bar"></span>
-      <span class="twelvePM">12pm</span>
-      <span id="twelvePM-bar"></span>
-      <span class="threePM">3pm</span>
-      <span id="threePM-bar"></span>
-      <span class="sixPM">6pm</span>
-      <span id="sixPM-bar"></span>
-      <span class="ninePM">9pm</span>
-      <span id="ninePM-bar"></span>
-      <span class="twelveAM-2">12am</span>
-      <span id="twelveAM-bar-2"></span>
-      <div class="future-hours">
-        <span class="hours" *ngFor="let hour of nextTwelveHours">
-          <span class="mini-container">
-            <span class="head">{{getTime(hour)}}</span>
-            <div class="hour-temp">{{hour.temperature}} °F</div>
-            <img *ngIf="(hour.shortForecast=='Clear' || hour.shortForecast=='Sunny' || hour.shortForecast=='Mostly Sunny' || hour.shortForecast=='Mostly Clear') && hour.isDaytime" class="weather-img-small" src="../../assets/sunny.png">
-            <img *ngIf="(hour.shortForecast=='Clear' || hour.shortForecast=='Sunny' || hour.shortForecast=='Mostly Sunny' || hour.shortForecast=='Mostly Clear') && !hour.isDaytime" class="weather-img-small-night" src="../../assets/nightsunny.png">
-            <img *ngIf="(hour.shortForecast=='Partly Sunny' || hour.shortForecast=='Mostly Cloudy' || hour.shortForecast=='Cloudy' || hour.shortForecast=='Increasing Clouds' || hour.shortForecast=='Decreasing Clouds' || hour.shortForecast=='Clearing' || hour.shortForecast=='Gradual Clearing' || hour.shortForecast=='Clearing Late' || hour.shortForecast=='Becoming Cloudy') && hour.isDaytime" class="weather-img-small" src="../../assets/sunwithclouds.png">
-            <img *ngIf="(hour.shortForecast=='Partly Sunny' ||  hour.shortForecast=='Decreasing Clouds' || hour.shortForecast=='Clearing' || hour.shortForecast=='Gradual Clearing' || hour.shortForecast=='Clearing Late' || hour.shortForecast=='Becoming Cloudy') && !hour.isDaytime" class="weather-img-small-night" src="../../assets/nightwithclouds.png">
-            <img *ngIf="(hour.shortForecast=='Mostly Cloudy' || hour.shortForecast=='Cloudy' || hour.shortForecast=='Increasing Clouds') && hour.isDaytime" class="weather-img-small" src="../../assets/cloudy.png">
-            <img *ngIf="(hour.shortForecast=='Mostly Cloudy' || hour.shortForecast=='Cloudy' || hour.shortForecast=='Increasing Clouds') && !hour.isDaytime" class="weather-img-small-night" src="../../assets/cloudy.png">
-            <img *ngIf="(hour.shortForecast=='Rain' || hour.shortForecast=='Slight Chance Rain Showers' || hour.shortForecast=='Chance Rain Showers' || hour.shortForecast=='Rain Showers Likely' || hour.shortForecast=='Rain Showers' || hour.shortForecast=='Slight Chance Rain' || hour.shortForecast=='Chance Rain' || hour.shortForecast=='Rain Likely' || hour.shortForecast=='Rain' || hour.shortForecast=='Heavy Rain' || hour.shortForecast=='Slight Chance Drizzle' || hour.shortForecast=='Chance Drizzle' || hour.shortForecast=='Drizzle Likely' || hour.shortForecast=='Drizzle') && hour.isDaytime" class="weather-img-small" src="../../assets/rain.png">
-            <img *ngIf="(hour.shortForecast=='Rain' || hour.shortForecast=='Slight Chance Rain Showers' || hour.shortForecast=='Chance Rain Showers' || hour.shortForecast=='Rain Showers Likely' || hour.shortForecast=='Rain Showers' || hour.shortForecast=='Slight Chance Rain' || hour.shortForecast=='Chance Rain' || hour.shortForecast=='Rain Likely' || hour.shortForecast=='Rain' || hour.shortForecast=='Heavy Rain' || hour.shortForecast=='Slight Chance Drizzle' || hour.shortForecast=='Chance Drizzle' || hour.shortForecast=='Drizzle Likely' || hour.shortForecast=='Drizzle') && !hour.isDaytime" class="weather-img-small-night" src="../../assets/rain.png">
-            <img *ngIf="(hour.shortForecast=='Slight Chance Snow Showers' || hour.shortForecast=='Chance Snow Showers' || hour.shortForecast=='Snow Showers Likely' || hour.shortForecast=='Snow Showers' || hour.shortForecast=='Slight Chance Flurries' || hour.shortForecast=='Chance Flurries' || hour.shortForecast=='Flurries Likely' || hour.shortForecast=='Flurries' || hour.shortForecast=='Slight Chance Snow' || hour.shortForecast=='Chance Snow' || hour.shortForecast=='Snow Likely' || hour.shortForecast=='Snow' || hour.shortForecast=='Blizzard') && hour.isDaytime" class="weather-img-small" src="../../assets/snow.png">
-            <img *ngIf="(hour.shortForecast=='Slight Chance Snow Showers' || hour.shortForecast=='Chance Snow Showers' || hour.shortForecast=='Snow Showers Likely' || hour.shortForecast=='Snow Showers' || hour.shortForecast=='Slight Chance Flurries' || hour.shortForecast=='Chance Flurries' || hour.shortForecast=='Flurries Likely' || hour.shortForecast=='Flurries' || hour.shortForecast=='Slight Chance Snow' || hour.shortForecast=='Chance Snow' || hour.shortForecast=='Snow Likely' || hour.shortForecast=='Snow' || hour.shortForecast=='Blizzard') && !hour.isDaytime" class="weather-img-small-night" src="../../assets/snow.png">
-            <img *ngIf="(hour.shortForecast=='Slight Chance Rain/Snow' || hour.shortForecast=='Chance Rain/Snow' || hour.shortForecast=='Rain/Snow Likely' || hour.shortForecast=='Rain/Snow') && hour.isDaytime" class="weather-img-small" src="../../assets/rainsnow.png">
-            <img *ngIf="(hour.shortForecast=='Slight Chance Rain/Snow' || hour.shortForecast=='Chance Rain/Snow' || hour.shortForecast=='Rain/Snow Likely' || hour.shortForecast=='Rain/Snow') && !hour.isDaytime" class="weather-img-small-night" src="../../assets/rainsnow.png">
-            <img *ngIf="(hour.shortForecast=='Isolated Thunderstorms' || hour.shortForecast=='Slight Chance Thunderstorms' || hour.shortForecast=='Chance Thunderstorms' || hour.shortForecast=='Thunderstorms Likely' || hour.shortForecast=='Thunderstorms' || hour.shortForecast=='Severe Tstms') && hour.isDaytime" class="weather-img-small" src="../../assets/thunderday.png">
-            <img *ngIf="(hour.shortForecast=='Isolated Thunderstorms' || hour.shortForecast=='Slight Chance Thunderstorms' || hour.shortForecast=='Chance Thunderstorms' || hour.shortForecast=='Thunderstorms Likely' || hour.shortForecast=='Thunderstorms' || hour.shortForecast=='Severe Tstms') && !hour.isDaytime" class="weather-img-small-night" src="../../assets/thundernight.png">
-            <span class="short-forecast">{{hour.shortForecast}}</span>
-          </span>
-        </span>
-      </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>

@@ -11,59 +11,58 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
   public time: number;
   public date = new Date();
   private interval;
-  public inC = false;
-  public inF = true;
   public fTemp: number;
   public icon: string;
   public isDayTime: boolean;
   public nextTwelveHours: SingleHour[];
   public hours: string[] = [];
   public highLow: string;
+  public isRain = false;
+  public isSun = false;
+  public isSnow = false;
+  public missing: boolean;
   constructor(public jsonReaderService: JsonReaderService) {
   }
 
   ngOnInit(): void {
-     const iconInterval = setInterval(() => {
-      this.icon = this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast;
-      this.isDayTime = this.jsonReaderService.hourlyJSON.properties.periods[0].isDaytime;
-      this.nextTwelveHours = this.jsonReaderService.getNextTwelveHours();
-      this.highLow = this.jsonReaderService.getHighLow();
-      },
-      100);
-
-     const d = new Date();
-     this.time = ((d.getHours() * 60 + d.getMinutes()) * 100) / 1440;
-     this.interval = setInterval(() => {
-        this.time = ((d.getHours() * 60 + d.getMinutes()) * 100) / 1440;
-        this.jsonReaderService.getNextTwelveHours();
-        if (this.icon || this.isDayTime) {
-          clearInterval(iconInterval);
+    this.jsonReaderService.getLocation().then(res => {
+      this.jsonReaderService.getInitialJson(res).then(() => {
+          this.jsonReaderService.getHourly(this.jsonReaderService.weatherJSON).then(() => {
+              this.jsonReaderService.getNextTwelveHours().then(() => {
+                this.nextTwelveHours = this.jsonReaderService.nextTwelveHours;
+                this.icon = this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast;
+                this.isDayTime = this.jsonReaderService.hourlyJSON.properties.periods[0].isDaytime;
+                this.highLow = this.jsonReaderService.getHighLow();
+                console.log(this.jsonReaderService.hourlyJSON);
+                if (this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast.toLocaleLowerCase().includes('sun')) {
+                  this.isSun = true;
+                }
+                else if (this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast.toLocaleLowerCase().includes('rain')) {
+                  this.isRain = true;
+                }
+                else if (this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast.toLocaleLowerCase().includes('snow')) {
+                  this.isSnow = true;
+                }
+                this.missing = (!this.isRain && !this.isSnow && !this.isSun);
+                console.log(this.missing);
+              });
+          });
         }
+      );
+    });
+
+    const d = new Date();
+    this.time = ((d.getHours() * 60 + d.getMinutes()) * 100) / 1440;
+
+    this.interval = setInterval(() => {
+        this.time = ((d.getHours() * 60 + d.getMinutes()) * 100) / 1440;
+        this.ngOnInit();
       }, 30000);
   }
 
   ngOnDestroy(): void {
     if (this.interval){
       clearInterval(this.interval);
-    }
-  }
-
-  convertToC(): void {
-    if (this.inF) {
-      this.fTemp = this.jsonReaderService.hourlyJSON.properties.periods[0].temperature;
-      this.jsonReaderService.hourlyJSON.properties.periods[0].temperature =
-        Math.round(((this.jsonReaderService.hourlyJSON.properties.periods[0].temperature - 32) * 5 / 9)
-      * 10) / 10;
-      this.inF = false;
-      this.inC = true;
-    }
-  }
-
-  convertToF(): void {
-    if (this.inC) {
-      this.jsonReaderService.hourlyJSON.properties.periods[0].temperature = this.fTemp;
-      this.inF = true;
-      this.inC = false;
     }
   }
 

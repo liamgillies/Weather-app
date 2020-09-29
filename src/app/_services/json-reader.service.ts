@@ -27,7 +27,7 @@ export class JsonReaderService {
             position.coords.longitude,
         ); }
         else{
-          return reject('');
+          return reject('geo');
         }
       });
     });
@@ -61,27 +61,28 @@ export class JsonReaderService {
     });
   }
 
-  getNextTwelveHours(): SingleHour[] {
-    if (this.nextTwelveHours.length === 0) {
+  getNextTwelveHours(): Promise<void> {
+    this.nextTwelveHours = [];
+    return new Promise( (resolve) => {
       for (let i = 1; i < 13; i++) {
         this.nextTwelveHours.push(this.hourlyJSON.properties.periods[i]);
       }
-    }
-    return this.nextTwelveHours;
+      resolve();
+    });
   }
 
   getHighLow(): string {
     let min = this.hourlyJSON.properties.periods[0].temperature;
     let max = this.hourlyJSON.properties.periods[0].temperature;
     for (const ele of this.hourlyJSON.properties.periods){
-      if (ele.startTime.substring(11, 13) === '00'){
-          return 'Today will have a high of ' + max + '\n and a low of ' + min;
-      }
       if (ele.temperature > max){
         max = ele.temperature;
       }
       if (ele.temperature < min){
         min = ele.temperature;
+      }
+      if (ele.startTime.substring(11, 13) === '00'){
+        return 'Today will have a high of ' + max + '\n and a low of ' + min;
       }
     }
     return '';

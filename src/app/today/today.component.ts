@@ -12,15 +12,5 @@ export class TodayComponent implements OnInit {
   constructor(private jsonReaderService: JsonReaderService) { }
 
   ngOnInit(): void {
-    this.getJSON();
-  }
-
-  getJSON(): void {
-    this.jsonReaderService.getLocation().then(res => {
-      this.jsonReaderService.getInitialJson(res).then(() => {
-        this.jsonReaderService.getHourly(this.jsonReaderService.weatherJSON).then();
-        }
-      );
-    });
   }
 }
