@@ -37,7 +37,8 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
                 if (this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast.toLocaleLowerCase().includes('sun')) {
                   this.isSun = true;
                 }
-                else if (this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast.toLocaleLowerCase().includes('rain')) {
+                else if (this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast.toLocaleLowerCase().includes('rain') ||
+                this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast.toLowerCase().includes('thunder')) {
                   this.isRain = true;
                 }
                 else if (this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast.toLocaleLowerCase().includes('snow')) {
