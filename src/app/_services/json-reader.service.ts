@@ -2,36 +2,60 @@ import { Injectable } from '@angular/core';
 import {WeatherJSON} from '../_models/weather-json';
 import {HourlyJSON} from '../_models/hourly-json';
 import {SingleHour} from '../_models/single-hour';
+import {CityJSON} from '../_models/city-json';
 
 @Injectable({
   providedIn: 'any'
 })
 export class JsonReaderService {
-  public lat = 0;
-  public long = 0;
+  public lat: number;
+  public long: number;
   public weatherJSON: WeatherJSON;
   public hourlyJSON: HourlyJSON;
   public nextTwelveHours: SingleHour[] = [];
   public url = '';
+  public city: string;
+  public cityJSON: CityJSON;
+  public cityOutOfBounds: boolean;
   constructor() { }
 
   getLocation(): Promise<string> {
-    return new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(position => {
-        if (position) {
-          this.url = 'https://api.weather.gov/points/' +
-            position.coords.latitude + ',' +
-            position.coords.longitude;
-          return resolve('https://api.weather.gov/points/' +
-            position.coords.latitude + ',' +
-            position.coords.longitude,
-        ); }
-        else{
-          return reject('geo');
+      return new Promise((resolve, reject) => {
+        if (!this.city) {
+          navigator.geolocation.getCurrentPosition(position => {
+            if (position) {
+              this.lat = position.coords.latitude;
+              this.long = position.coords.longitude;
+              this.url = 'https://api.weather.gov/points/' +
+                position.coords.latitude + ',' +
+                position.coords.longitude;
+              return resolve(this.url);
+            } else {
+              return reject('geo');
+            }
+          });
+        }
+        else {
+          this.getCityLatLong(this.city).then(() => {
+            // USA bounds
+            if (this.cityJSON[0].lat > 19.50139 && this.cityJSON[0].lon > -161.75583 &&
+            this.cityJSON[0].lat < 64.85694 && this.cityJSON[0].lon < -68.01197) {
+              this.lat = this.cityJSON[0].lat;
+              this.long = this.cityJSON[0].lon;
+              this.cityOutOfBounds = false;
+              resolve(this.url = 'https://api.weather.gov/points/' +
+                this.lat + ',' + this.long);
+            }
+            else {
+              this.city = '';
+              this.cityOutOfBounds = true;
+              resolve(this.url = 'https://api.weather.gov/points/' +
+                this.lat + ',' + this.long);
+            }
+          });
         }
       });
-    });
-  }
+    }
 
   getInitialJson(url: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -47,10 +71,10 @@ export class JsonReaderService {
     });
   }
 
-  getHourly(json: WeatherJSON): Promise<void>{
+  getHourly(json: WeatherJSON): Promise<void> {
     return new Promise((resolve, reject) => {
       if (!json) {
-        reject('Weather JSON not fetched');
+        reject('Hourly JSON not fetched');
       } else {
         fetch(json.properties.forecastHourly)
           .then(res => res.json())
@@ -86,5 +110,20 @@ export class JsonReaderService {
       }
     }
     return '';
+  }
+
+  // Nominatim city API query
+  getCityLatLong(city: string): Promise<void> {
+    this.city.replace(' ', '+');
+    return new Promise((resolve, reject) => {
+        fetch('https://nominatim.openstreetmap.org/?addressdetails=1&q=' + city + '&format=json&limit=1')
+          .then(res => res.json())
+          .then(out => {
+            console.log(out);
+            resolve(this.cityJSON = out);
+        }).catch(err => {
+          reject(err);
+        });
+    });
   }
 }

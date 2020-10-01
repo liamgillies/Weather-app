@@ -23,7 +23,7 @@
   background-size: cover;
 }
 .bg-missing {
-  background: darkcyan;
+  background: url(https://i.pinimg.com/originals/c3/a5/e2/c3a5e24b3b3119903eb0f6e8ca63edba.png);
   width: 100%;
   height: 100vh;
   background-size: cover;
@@ -288,4 +288,36 @@ form {
   text-align: center;
   color: white;
   font-size: 24px;
+}
+form {
+  margin-top: -100px;
+  margin-left: 600px;
+  border: none;
+}
+input[type=text] {
+  position: absolute;
+  width: 250px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+#search-label {
+  font-size: 30px;
+  margin-left: -70px;
+  margin-top: 11px;
+  text-align: right;
+  clear: both;
+  float:left;
+  margin-right:15px;
+}
+#error-label {
+  position: absolute;
+  width: 250px;
+  font-size: 20px;
+  color: darkred;
+  margin-top: 50px;
+  margin-left: 2px;
 }

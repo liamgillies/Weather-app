@@ -1,4 +1,12 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
+@import url(http://db.onlinewebfonts.com/c/b2e75c336df191233b3096682c9ee6be?family=PixelarRegularW01-Regular);
+@import url(https://db.onlinewebfonts.com/c/b2e75c336df191233b3096682c9ee6be?family=PixelarRegularW01-Regular);
+.pixel-font{
+  color: white;
+  font-family: PixelarRegularW01-Regular;
+  font-size: 20px;
+}
 .navbar-background{
-  background: lightskyblue;
+  background: url(https://sportsturf.net/wp-content/uploads/2016/06/Blue-Gradient-Background-Wallpaper.jpg);
+  background-size: cover;
 }

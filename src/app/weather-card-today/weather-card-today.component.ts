@@ -17,14 +17,18 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
   public nextTwelveHours: SingleHour[];
   public hours: string[] = [];
   public highLow: string;
-  public isRain = false;
-  public isSun = false;
-  public isSnow = false;
+  public isRain: boolean;
+  public isSun: boolean;
+  public isSnow: boolean;
   public missing: boolean;
+  public cityName: string;
   constructor(public jsonReaderService: JsonReaderService) {
   }
 
   ngOnInit(): void {
+    this.isRain = false;
+    this.isSun = false;
+    this.isSnow = false;
     this.jsonReaderService.getLocation().then(res => {
       this.jsonReaderService.getInitialJson(res).then(() => {
           this.jsonReaderService.getHourly(this.jsonReaderService.weatherJSON).then(() => {
@@ -57,7 +61,6 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
 
     this.interval = setInterval(() => {
         this.time = ((d.getHours() * 60 + d.getMinutes()) * 100) / 1440;
-        this.ngOnInit();
       }, 30000);
   }
 
@@ -88,5 +91,10 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
       x -= 12;
       return x + 'pm';
     }
+  }
+
+  getCityName(name: string): void {
+    this.jsonReaderService.city = name;
+    this.ngOnInit();
   }
 }
