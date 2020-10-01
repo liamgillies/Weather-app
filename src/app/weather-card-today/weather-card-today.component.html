@@ -1,13 +1,14 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="//geodata.solutions/includes/statecity.js"></script>
-<div *ngIf="jsonReaderService.weatherJSON">
+<div>
+  <div class="entire-container">
   <section [ngClass]="{'bg-rain': isRain, 'bg-sun': isSun, 'bg-snow': isSnow, 'bg-missing': missing}">
     <div class="card-container">
       <div class="card pixel-font">
         <div class="text-container">
           <form (submit)="getCityName(city.value)" onsubmit="return false">
             <label id="search-label">Search: </label>
-            <input type="text" #city placeholder="city name">
+            <input type="text" #city placeholder="ex. mountain view">
             <label id="error-label" *ngIf="jsonReaderService.cityOutOfBounds">Please search a city inside the US</label>
           </form>
           <div class="location">{{jsonReaderService.weatherJSON.properties.relativeLocation.properties.city}},
@@ -25,8 +26,8 @@
         <img *ngIf="(icon=='Mostly Cloudy' || icon=='Cloudy' || icon=='Increasing Clouds') && !isDayTime" class="weather-img-night" src="../../assets/cloudy.png">
         <img *ngIf="isRain && !isSnow && isDayTime" class="weather-img" src="../../assets/rain.png">
         <img *ngIf="isRain && !isSnow && !isDayTime" class="weather-img-night" src="../../assets/rain.png">
-        <img *ngIf="(isSnow || icon=='Slight Chance Flurries' || icon=='Chance Flurries' || icon=='Flurries Likely' || icon=='Flurries' || icon=='Blizzard') && isDayTime" class="weather-img" src="../../assets/snow.png">
-        <img *ngIf="(isSnow || icon=='Slight Chance Flurries' || icon=='Chance Flurries' || icon=='Flurries Likely' || icon=='Flurries' || icon=='Blizzard') && !isDayTime" class="weather-img-night" src="../../assets/snow.png">
+        <img *ngIf="(isSnow && !isRain) || icon=='Slight Chance Flurries' || icon=='Chance Flurries' || icon=='Flurries Likely' || icon=='Flurries' || icon=='Blizzard' && isDayTime" class="weather-img" src="../../assets/snow.png">
+        <img *ngIf="(isSnow && !isRain) || icon=='Slight Chance Flurries' || icon=='Chance Flurries' || icon=='Flurries Likely' || icon=='Flurries' || icon=='Blizzard' && !isDayTime" class="weather-img-night" src="../../assets/snow.png">
         <img *ngIf="isRain && isSnow && isDayTime" class="weather-img" src="../../assets/rainsnow.png">
         <img *ngIf="isRain && isSnow && !isDayTime" class="weather-img-night" src="../../assets/rainsnow.png">
         <img *ngIf="jsonReaderService.hourlyJSON.properties.periods[0].shortForecast.toLowerCase().includes('thunderstorms') && isDayTime" class="weather-img" src="../../assets/thunderday.png">
@@ -37,7 +38,7 @@
             <div class="progress-bar" [style.width.%]=time role="progressbar" aria-valuemin="0" aria-valuemax="24"></div>
           </div>
         </div>
-        <span id="date" [style.width.%]=(time+3.5)>{{date | date: "h:mm a"}}</span>
+        <span class="date" [style.width.%]=(time+3.5)>{{displayDate}}</span>
         <span class="twelveAM">12am</span>
         <span id="twelveAM-bar"></span>
         <span class="threeAM">3am</span>
@@ -69,7 +70,9 @@
               <img *ngIf="(hour.shortForecast=='Mostly Cloudy' ||  hour.shortForecast=='Cloudy' || hour.shortForecast=='Increasing Clouds') && hour.isDaytime" class="weather-img-small" src="../../assets/cloudy.png">
               <img *ngIf="(hour.shortForecast=='Mostly Cloudy' || hour.shortForecast=='Cloudy' || hour.shortForecast=='Increasing Clouds') && !hour.isDaytime" class="weather-img-small-night" src="../../assets/cloudy.png">
               <img *ngIf="hour.shortForecast.toLowerCase().includes('rain') && !hour.shortForecast.toLowerCase().includes('snow') && hour.isDaytime" class="weather-img-small" src="../../assets/rain.png">
-              <img *ngIf="hour.shortForecast.toLowerCase().includes('rain') && !hour.shortForecast.toLowerCase().includes('snow') && !hour.isDaytime" class="weather-img-small-night" src="../../assets/rain.png"><img *ngIf="(hour.shortForecast=='Slight Chance Snow Showers' || hour.shortForecast=='Chance Snow Showers' || hour.shortForecast=='Snow Showers Likely' || hour.shortForecast=='Snow Showers' || hour.shortForecast=='Slight Chance Flurries' || hour.shortForecast=='Chance Flurries' || hour.shortForecast=='Flurries Likely' || hour.shortForecast=='Flurries' || hour.shortForecast=='Slight Chance Snow' || hour.shortForecast=='Chance Snow' || hour.shortForecast=='Snow Likely' || hour.shortForecast=='Snow' || hour.shortForecast=='Blizzard') && !hour.isDaytime" class="weather-img-small-night" src="../../assets/snow.png">
+              <img *ngIf="hour.shortForecast.toLowerCase().includes('rain') && !hour.shortForecast.toLowerCase().includes('snow') && !hour.isDaytime" class="weather-img-small-night" src="../../assets/rain.png">
+              <img *ngIf="(hour.shortForecast.toLowerCase().includes('snow') && !hour.shortForecast.toLowerCase().includes('rain')) || icon=='Slight Chance Flurries' || icon=='Chance Flurries' || icon=='Flurries Likely' || icon=='Flurries' || icon=='Blizzard' && isDayTime" class="weather-img-small" src="../../assets/snow.png">
+              <img *ngIf="(hour.shortForecast.toLowerCase().includes('snow') && !hour.shortForecast.toLowerCase().includes('rain')) || icon=='Slight Chance Flurries' || icon=='Chance Flurries' || icon=='Flurries Likely' || icon=='Flurries' || icon=='Blizzard' && !isDayTime" class="weather-img-small-night" src="../../assets/snow.png">
               <img *ngIf="hour.shortForecast.toLowerCase().includes('rain') && hour.shortForecast.toLowerCase().includes('snow') && hour.isDaytime" class="weather-img-small" src="../../assets/rainsnow.png">
               <img *ngIf="hour.shortForecast.toLowerCase().includes('rain') && hour.shortForecast.toLowerCase().includes('snow') && !hour.isDaytime" class="weather-img-small-night" src="../../assets/rainsnow.png">
               <img *ngIf="hour.shortForecast.toLowerCase().includes('thunderstorms') && hour.isDaytime" class="weather-img-small" src="../../assets/thunderday.png">
@@ -81,4 +84,5 @@
       </div>
     </div>
   </section>
+  </div>
 </div>

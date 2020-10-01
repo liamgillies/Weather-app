@@ -29,9 +29,9 @@
   background-size: cover;
 }
 .card-container {
-  position: relative;
+  position: absolute;
   width: 700px;
-  top: 50%;
+  top: 55%;
   float: left;
   height: 350px;
   left: 50%;
@@ -90,7 +90,7 @@ form {
 .progress-bar {
   border-right: 3px solid black;
 }
-#date {
+.date {
   text-align: right;
   color: white;
   white-space: nowrap;
@@ -280,6 +280,11 @@ form {
   display: block;
   text-align: center;
   font-size: 16px;
+  margin-left: 5px;
+  margin-right: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .long-forecast{
   position: absolute;

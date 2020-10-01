@@ -1,6 +1,9 @@
 import { Component, OnInit, OnDestroy, Pipe, PipeTransform } from '@angular/core';
 import {JsonReaderService} from '../_services/json-reader.service';
 import {SingleHour} from '../_models/single-hour';
+import {DateTime} from 'luxon';
+import {LuxonDate} from '../_models/luxon-date';
+import {deepCloneNode} from '@angular/cdk/drag-drop/clone-node';
 
 @Component({
   selector: 'app-weather-card-today',
@@ -9,7 +12,8 @@ import {SingleHour} from '../_models/single-hour';
 })
 export class WeatherCardTodayComponent implements OnInit, OnDestroy {
   public time: number;
-  public date = new Date();
+  public date: LuxonDate;
+  public displayDate: string;
   private interval;
   public fTemp: number;
   public icon: string;
@@ -32,7 +36,14 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
     this.jsonReaderService.getLocation().then(res => {
       this.jsonReaderService.getInitialJson(res).then(() => {
           this.jsonReaderService.getHourly(this.jsonReaderService.weatherJSON).then(() => {
+              // initialize time and date for location
+              this.date = DateTime.local().setZone(this.jsonReaderService.weatherJSON.properties.timeZone);
+              this.time = ((this.date.c.hour * 60 + this.date.c.minute) * 100) / 1440;
+              // format date to be displayed
+              this.displayDate = this.getDisplayDate();
+
               this.jsonReaderService.getNextTwelveHours().then(() => {
+                // dynamic background images
                 this.nextTwelveHours = this.jsonReaderService.nextTwelveHours;
                 this.icon = this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast;
                 this.isDayTime = this.jsonReaderService.hourlyJSON.properties.periods[0].isDaytime;
@@ -49,19 +60,18 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
                   this.isSnow = true;
                 }
                 this.missing = (!this.isRain && !this.isSnow && !this.isSun);
-                console.log(this.missing);
+                console.log(this.jsonReaderService.weatherJSON);
               });
           });
         }
       );
     });
 
-    const d = new Date();
-    this.time = ((d.getHours() * 60 + d.getMinutes()) * 100) / 1440;
-
+    // update time and date
     this.interval = setInterval(() => {
-        this.time = ((d.getHours() * 60 + d.getMinutes()) * 100) / 1440;
-      }, 30000);
+      this.time = ((this.date.c.hour * 60 + this.date.c.minute) * 100) / 1440;
+      this.displayDate = this.getDisplayDate();
+    }, 30000);
   }
 
   ngOnDestroy(): void {
@@ -70,6 +80,7 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
     }
   }
 
+  // get time for cards
   getTime(hour): string {
     if (hour.startTime.substring(11, 12) === '0') {
       if (hour.startTime.substring(11, 13) === '00') {
@@ -93,6 +104,36 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
     }
   }
 
+  // get time for progress bar
+  getDisplayDate(): string {
+    const singleMinDigit = this.date.c.minute.toString().length === 1;
+    if (this.date.c.hour < 12 && this.date.c.hour > 0) {
+      if (singleMinDigit) {
+        return this.date.c.hour + ':0' + this.date.c.minute + ' AM';
+      }
+      else {
+        return this.date.c.hour + ':' + this.date.c.minute + ' AM';
+      }
+    }
+    else if (this.date.c.hour > 0) {
+      if (singleMinDigit) {
+        return (this.date.c.hour - 12) + ':0' + this.date.c.minute + ' PM';
+      }
+      else {
+        return (this.date.c.hour - 12) + ':' + this.date.c.minute + ' PM';
+      }
+    }
+    else {
+      if (singleMinDigit) {
+        return '12:0' + this.date.c.minute + ' AM';
+      }
+      else {
+        return '12:' + this.date.c.minute + ' AM';
+      }
+    }
+  }
+
+  // get city name and refresh
   getCityName(name: string): void {
     this.jsonReaderService.city = name;
     this.ngOnInit();
