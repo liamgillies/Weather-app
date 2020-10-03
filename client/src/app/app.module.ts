@@ -9,11 +9,11 @@ import { LandingComponent } from './landing/landing.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { WeatherCardTodayComponent } from './weather-card-today/weather-card-today.component';
-import { TodayComponent } from './today/today.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule} from '@angular/material/progress-bar';
 import { CommonModule } from '@angular/common';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
+import { SubscribeComponent } from './subscribe/subscribe.component';
 
 @NgModule({
   declarations: [
@@ -21,8 +21,8 @@ import { Nl2BrPipeModule } from 'nl2br-pipe';
     LocationComponent,
     LandingComponent,
     NavbarComponent,
-    TodayComponent,
     WeatherCardTodayComponent,
+    SubscribeComponent,
   ],
   imports: [
     BrowserModule,

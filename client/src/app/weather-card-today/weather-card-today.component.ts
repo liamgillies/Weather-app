@@ -43,7 +43,7 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
               this.displayDate = this.getDisplayDate();
 
               this.jsonReaderService.getNextTwelveHours().then(() => {
-                // dynamic background images
+                // dynamic background images and high/low text
                 this.nextTwelveHours = this.jsonReaderService.nextTwelveHours;
                 this.icon = this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast;
                 this.isDayTime = this.jsonReaderService.hourlyJSON.properties.periods[0].isDaytime;
@@ -71,6 +71,7 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
     this.interval = setInterval(() => {
       this.time = ((this.date.c.hour * 60 + this.date.c.minute) * 100) / 1440;
       this.displayDate = this.getDisplayDate();
+      this.nextTwelveHours = this.jsonReaderService.nextTwelveHours;
     }, 30000);
   }
 

@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Routes, RouterModule} from '@angular/router';
 import {LandingComponent} from './landing/landing.component';
 import {LocationComponent} from './location/location.component';
-import {TodayComponent} from './today/today.component';
 import {WeatherCardTodayComponent} from './weather-card-today/weather-card-today.component';
+import {SubscribeComponent} from './subscribe/subscribe.component';
 
 const routes: Routes = [
   {path: '', component: LandingComponent},
   {path: 'home', component: LocationComponent},
-  {path: 'today', component: TodayComponent}
+  {path: 'today', component: WeatherCardTodayComponent},
+  {path: 'subscribe', component: SubscribeComponent},
+  {path: '**', redirectTo: ''}
 ];
 
 @NgModule({
