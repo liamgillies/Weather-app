@@ -11,72 +11,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ddb512ec-e20f-47aa-b8a3-80d83c8cce5c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.browserslistrc" beforeDir="false" afterPath="$PROJECT_DIR$/client/.browserslistrc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/client/.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/angular.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e2e/protractor.conf.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/e2e/protractor.conf.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e2e/src/app.e2e-spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/e2e/src/app.e2e-spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e2e/src/app.po.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/e2e/src/app.po.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e2e/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/e2e/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/karma.conf.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/karma.conf.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/_models/city-json.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/_models/city-json.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/_models/hourly-json.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/_models/hourly-json.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/_models/luxon-date.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/_models/luxon-date.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/_models/single-hour.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/_models/single-hour.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/_models/weather-json.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/_models/weather-json.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/_services/json-reader.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/_services/json-reader.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/app-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/app.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/app.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/app.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/app.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/app.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/app.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/landing/landing.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/landing/landing.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/landing/landing.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/landing/landing.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/landing/landing.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/landing/landing.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/location/location.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/location/location.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/location/location.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/location/location.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/location/location.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/location/location.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/navbar/navbar.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/navbar/navbar.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/navbar/navbar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/navbar/navbar.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/navbar/navbar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/navbar/navbar.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/today/today.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/today/today.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/today/today.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/weather-card-today/weather-card-today.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/weather-card-today/weather-card-today.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/weather-card-today/weather-card-today.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/weather-card-today/weather-card-today.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/weather-card-today/weather-card-today.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/weather-card-today/weather-card-today.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/assets/.gitkeep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/cloudy.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/assets/cloudy.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/nightsunny.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/assets/nightsunny.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/nightwithclouds.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/assets/nightwithclouds.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/rain.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/assets/rain.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/rainsnow.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/assets/rainsnow.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/snow.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/assets/snow.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/sunny.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/assets/sunny.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/sunwithclouds.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/assets/sunwithclouds.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/thunderday.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/assets/thunderday.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/thundernight.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/assets/thundernight.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/environments/environment.prod.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/environments/environment.prod.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/environments/environment.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/polyfills.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/polyfills.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.app.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/tsconfig.app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.spec.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/tsconfig.spec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tslint.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/tslint.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/controllers/subscribers.controller.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/services/subscribers.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/bin/www" beforeDir="false" afterPath="$PROJECT_DIR$/server/bin/www" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/public/stylesheets/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routes/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/subscribers.router.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -102,13 +59,14 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\lwgil\fullstack\weather-app\src\assets" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\lwgil\fullstack\weather-app" />
       <recent name="C:\Users\lwgil\fullstack\weather-app\client" />
       <recent name="C:\Users\lwgil\fullstack\weather-app\src\app\landing" />
       <recent name="C:\Users\lwgil\fullstack\weather-app\src\app\_services" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\lwgil\fullstack\weather-app\src\assets" />
     </key>
   </component>
   <component name="RunManager" selected="npm.Angular CLI Server">
@@ -158,6 +116,7 @@
       <workItem from="1601588461152" duration="16000" />
       <workItem from="1601695512241" duration="3888000" />
       <workItem from="1601699554757" duration="244000" />
+      <workItem from="1601699816810" duration="3323000" />
     </task>
     <servers />
   </component>
@@ -181,10 +140,30 @@
       <screen x="0" y="0" width="1280" height="720" />
     </state>
     <state x="405" y="162" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.720@0.0.1280.720" timestamp="1600722237629" />
+    <state x="372" y="107" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1601784471888">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="372" y="107" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.720@0.0.1280.720" timestamp="1601784471888" />
     <state x="422" y="115" key="FileChooserDialogImpl" timestamp="1601588480535">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
     <state x="422" y="115" key="FileChooserDialogImpl/0.0.1280.720@0.0.1280.720" timestamp="1601588480535" />
+    <state width="1259" height="173" key="GridCell.Tab.0.bottom" timestamp="1601784697137">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state width="1259" height="173" key="GridCell.Tab.0.bottom/0.0.1280.720@0.0.1280.720" timestamp="1601784697137" />
+    <state width="1259" height="173" key="GridCell.Tab.0.center" timestamp="1601784697137">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state width="1259" height="173" key="GridCell.Tab.0.center/0.0.1280.720@0.0.1280.720" timestamp="1601784697137" />
+    <state width="1259" height="173" key="GridCell.Tab.0.left" timestamp="1601784697137">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state width="1259" height="173" key="GridCell.Tab.0.left/0.0.1280.720@0.0.1280.720" timestamp="1601784697137" />
+    <state width="1259" height="173" key="GridCell.Tab.0.right" timestamp="1601784697137">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state width="1259" height="173" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1601784697137" />
     <state x="460" y="274" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600724061520">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
