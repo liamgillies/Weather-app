@@ -326,3 +326,9 @@ input[type=text] {
   margin-top: 50px;
   margin-left: 2px;
 }
+mat-spinner {
+  position: absolute;
+  margin-left: 4200px;
+  margin-top: -375px;
+  zoom: 0.2;
+}

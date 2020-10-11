@@ -15,7 +15,6 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
   public date: LuxonDate;
   public displayDate: string;
   private interval;
-  public fTemp: number;
   public icon: string;
   public isDayTime: boolean;
   public nextTwelveHours: SingleHour[];
@@ -25,7 +24,7 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
   public isSun: boolean;
   public isSnow: boolean;
   public missing: boolean;
-  public cityName: string;
+  public loadingCity: boolean = false;
   constructor(public jsonReaderService: JsonReaderService) {
   }
 
@@ -36,6 +35,9 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
     this.jsonReaderService.getLocation().then(res => {
       this.jsonReaderService.getInitialJson(res).then(() => {
           this.jsonReaderService.getHourly(this.jsonReaderService.weatherJSON).then(() => {
+              //stop loading symbol
+              this.loadingCity = false;
+              
               // initialize time and date for location
               this.date = DateTime.local().setZone(this.jsonReaderService.weatherJSON.properties.timeZone);
               this.time = ((this.date.c.hour * 60 + this.date.c.minute) * 100) / 1440;
@@ -137,6 +139,7 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
   // get city name and refresh
   getCityName(name: string): void {
     this.jsonReaderService.city = name;
+    this.loadingCity = true;
     this.ngOnInit();
   }
 }

@@ -14,6 +14,8 @@ import { MatProgressBarModule} from '@angular/material/progress-bar';
 import { CommonModule } from '@angular/common';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { SubscribeComponent } from './subscribe/subscribe.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { SubscribeComponent } from './subscribe/subscribe.component';
     MatCardModule,
     MatProgressBarModule,
     CommonModule,
-    Nl2BrPipeModule
+    Nl2BrPipeModule,
+    MatProgressSpinnerModule
   ],
   providers: [Nl2BrPipeModule],
   bootstrap: [AppComponent]

@@ -11,6 +11,7 @@
             <input type="text" #city placeholder="ex. mountain view">
             <label id="error-label" *ngIf="jsonReaderService.cityOutOfBounds">Please search a city inside the US</label>
           </form>
+          <mat-spinner *ngIf="loadingCity"></mat-spinner>
           <div class="location">{{jsonReaderService.weatherJSON.properties.relativeLocation.properties.city}},
             {{jsonReaderService.weatherJSON.properties.relativeLocation.properties.state}}</div>
           <span class="temperature" *ngIf="jsonReaderService.hourlyJSON">
