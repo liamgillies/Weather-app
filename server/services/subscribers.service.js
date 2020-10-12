@@ -6,7 +6,12 @@ module.exports = {
 function validateEmail(email) {
     return new Promise((resolve, reject) => {
         const re = /\S+@\S+\.\S+/;
-        resolve(re.test(email) ? email : 'invalid email')
+        if(re.test(email)){
+            resolve(email);
+        }
+        else {
+            reject('invalid email')
+        }
     });
 }
 
