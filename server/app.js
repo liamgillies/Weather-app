@@ -16,7 +16,7 @@ app.listen(port, () => {
 
 //mongodb stuff
 const uri = "mongodb+srv://dbUser:dbUserPassword@cluster0.k7dtj.mongodb.net/Cluster0?retryWrites=true&w=majority";
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {

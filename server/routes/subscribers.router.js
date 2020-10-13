@@ -1,9 +1,10 @@
 const express = require('express');
-const subscriberService= require("../controllers/subscribers.controller");
+const subscriberController= require("../controllers/subscribers.controller");
 const router = express.Router();
 
 /* GET users listing. */
-router.post('/addemail', subscriberService.addEmail);
-router.get('/getemails', subscriberService.getEmails);
+router.post('/subscribe', subscriberController.addEmail);
+router.post('/unsubscribe', subscriberController.removeEmail);
+router.get('/getemails', subscriberController.getEmails);
 
 module.exports = router;

@@ -18,3 +18,5 @@ function validateEmail(email) {
 function getEmails() {
 
 }
+
+
