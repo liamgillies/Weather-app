@@ -15,6 +15,8 @@ import { CommonModule } from '@angular/common';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { SubscribeComponent } from './subscribe/subscribe.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -35,7 +37,10 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatProgressBarModule,
     CommonModule,
     Nl2BrPipeModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule,
   ],
   providers: [Nl2BrPipeModule],
   bootstrap: [AppComponent]

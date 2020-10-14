@@ -8,7 +8,7 @@ const MongoClient = require('mongodb').MongoClient;
 const subscribersRouter = require('./routes/subscribers.router');
 const app = express();
 const mongoose = require('mongoose')
-
+const cors = require('cors')
 const port = process.env.PORT || 4000
 app.listen(port, () => {
   console.log(`Server running on port ${port}`)
@@ -25,7 +25,7 @@ db.once('open', function() {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+app.use(cors());
 app.use('/subscribers', subscribersRouter);
 
 module.exports = app;

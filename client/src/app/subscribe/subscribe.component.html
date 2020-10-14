@@ -1,1 +1,17 @@
 <p>subscribe works!</p>
+<form [formGroup]="emailForm" (ngSubmit)="addEmail()">
+  <label>
+    Email:
+    <input type="text" formControlName="email">
+  </label>
+  <label>
+    Daily:
+    <input type="text" formControlName="daily">
+  </label>
+  <label>
+    Weekly:
+    <input type="text" formControlName="weekly">
+  </label>
+
+  <button type="submit" [disabled]="!emailForm.valid">Submit</button>
+</form>
