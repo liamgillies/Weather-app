@@ -3,19 +3,23 @@ const emailSchema = require("../models/email-schema")
 module.exports = {
     addEmail,
     getEmails,
-    removeEmail
+    removeEmail,
+    sendDailyEmails,
+    sendWeeklyEmails
 }
 
 function addEmail(req, res, next) {
     const d = req.body.daily;
     const w = req.body.weekly;
+    const u = req.body.url;
     subscriberService.validateEmail(req.body.email).then(result => {
         emailSchema.findOneAndUpdate({email: result},
-            {email: result, daily: d, weekly: w},
+            {email: result, daily: d, weekly: w, url: u},
             {upsert: true},
             (err, result) => {
             if(err) {
-                const e = new emailSchema({email: result, daily: d, weekly: w});
+                const e = new emailSchema({email: result, daily: d, weekly: w, url: u});
+                console.log(e);
                 e.save();
             }
             res.json(result);
@@ -32,4 +36,12 @@ function removeEmail(req, res, next) {
 
 function getEmails(req, res, next) {
     res.send('not implemented yet');
+}
+
+function sendDailyEmails(req, res, next) {
+    res.send(subscriberService.sendDailyEmails());
+}
+
+function sendWeeklyEmails(req, res, next) {
+    res.send(subscriberService.sendWeeklyEmails())
 }

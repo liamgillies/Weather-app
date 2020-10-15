@@ -17,6 +17,10 @@ const emailSchema = new Schema({
         validate() {
             return this.weekly || this.daily;
         }
+    },
+    url: {
+        type: String,
+        required: true
     }
 
 })

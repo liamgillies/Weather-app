@@ -17,6 +17,7 @@
     "morgan": "~1.9.1"
   },
   "devDependencies": {
-    "mongodb": "^3.6.2"
+    "mongodb": "^3.6.2",
+    "nodemailer": "^6.4.14"
   }
 }
