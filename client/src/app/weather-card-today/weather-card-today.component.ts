@@ -3,7 +3,7 @@ import {JsonReaderService} from '../_services/json-reader.service';
 import {SingleHour} from '../_models/single-hour';
 import {DateTime} from 'luxon';
 import {LuxonDate} from '../_models/luxon-date';
-import {deepCloneNode} from '@angular/cdk/drag-drop/clone-node';
+import {Nl2BrPipeModule} from 'nl2br-pipe';
 
 @Component({
   selector: 'app-weather-card-today',
@@ -24,7 +24,7 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
   public isSun: boolean;
   public isSnow: boolean;
   public missing: boolean;
-  public loadingCity: boolean = false;
+  public loadingCity = false;
   constructor(public jsonReaderService: JsonReaderService) {
   }
 
@@ -35,9 +35,9 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
     this.jsonReaderService.getLocation().then(res => {
       this.jsonReaderService.getInitialJson(res).then(() => {
           this.jsonReaderService.getHourly(this.jsonReaderService.weatherJSON).then(() => {
-              //stop loading symbol
+              // stop loading symbol
               this.loadingCity = false;
-              
+
               // initialize time and date for location
               this.date = DateTime.local().setZone(this.jsonReaderService.weatherJSON.properties.timeZone);
               this.time = ((this.date.c.hour * 60 + this.date.c.minute) * 100) / 1440;

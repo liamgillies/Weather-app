@@ -10,8 +10,8 @@ export class EmailsService {
   constructor(private http: HttpClient) {
   }
 
-  addEmail(email): Observable<string> {
-    return this.http.post<string>(`http://localhost:4000/subscribers/addemail`, email);
+  addEmail(email): Observable<void> {
+    return this.http.post<void>(`http://localhost:4000/subscribers/addemail`, email);
   }
 
 
