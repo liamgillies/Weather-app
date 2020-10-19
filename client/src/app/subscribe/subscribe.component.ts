@@ -31,6 +31,7 @@ export class SubscribeComponent implements OnInit {
     if (this.url === '') {
       throw new Error('URL broken XD');
     }
+    console.log('submitted');
     this.emailService.addEmail(
       {email: this.emailForm.controls.email.value,
             daily: this.emailForm.controls.daily.value,
