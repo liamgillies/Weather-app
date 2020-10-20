@@ -4,7 +4,8 @@ const Schema = mongoose.Schema
 const emailSchema = new Schema({
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     daily: {
         type: Boolean,
@@ -19,6 +20,10 @@ const emailSchema = new Schema({
         }
     },
     url: {
+        type: String,
+        required: true
+    },
+    timeZone: {
         type: String,
         required: true
     }

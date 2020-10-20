@@ -12,13 +12,14 @@ function addEmail(req, res, next) {
     const d = req.body.daily;
     const w = req.body.weekly;
     const u = req.body.url;
+    const t = req.body.timeZone;
     subscriberService.validateEmail(req.body.email).then(result => {
         emailSchema.findOneAndUpdate({email: result},
-            {email: result, daily: d, weekly: w, url: u},
+            {email: result, daily: d, weekly: w, url: u, timeZone: t},
             {upsert: true},
             (err, result) => {
             if(err) {
-                const e = new emailSchema({email: result, daily: d, weekly: w, url: u});
+                const e = new emailSchema({email: result, daily: d, weekly: w, url: u, timeZone: t});
                 console.log(e);
                 e.save();
             }
@@ -28,7 +29,7 @@ function addEmail(req, res, next) {
 }
 
 function removeEmail(req, res, next) {
-    emailSchema.deleteOne({email: req.body.email}, err => {
+    emailSchema.deleteOne({_id: req.params.id}, err => {
         if(err) res.send(err);
         else res.send('success');
     });
