@@ -13,19 +13,17 @@ function addEmail(req, res, next) {
     const w = req.body.weekly;
     const u = req.body.url;
     const t = req.body.timeZone;
-    subscriberService.validateEmail(req.body.email).then(result => {
-        emailSchema.findOneAndUpdate({email: result},
-            {email: result, daily: d, weekly: w, url: u, timeZone: t},
-            {upsert: true},
-            (err, result) => {
-            if(err) {
-                const e = new emailSchema({email: result, daily: d, weekly: w, url: u, timeZone: t});
-                console.log(e);
-                e.save();
-            }
-            res.json(result);
-        });
-    }).catch(err => console.log(err));
+    emailSchema.findOneAndUpdate({email: result},
+        {email: result, daily: d, weekly: w, url: u, timeZone: t},
+        {upsert: true},
+        (err, result) => {
+        if(err) {
+            const e = new emailSchema({email: result, daily: d, weekly: w, url: u, timeZone: t});
+            console.log(e);
+            e.save();
+        }
+        res.json(result);
+    });
 }
 
 function removeEmail(req, res, next) {

@@ -1,7 +1,6 @@
 const nodemailer = require('nodemailer');
 const emailSchema = require('../models/email-schema');
 const fetch = require("node-fetch");
-const timeZoneJS = require('timezone-js');
 
 
 const dailyTransporter = nodemailer.createTransport({
@@ -26,22 +25,9 @@ const weeklyMailOptions = {
     text: 'this is a weekly email'
 }
 module.exports = {
-    validateEmail,
     getEmails,
     sendDailyEmails,
     sendWeeklyEmails
-}
-
-function validateEmail(email) {
-    return new Promise((resolve, reject) => {
-        const re = /\S+@\S+\.\S+/;
-        if(re.test(email)){
-            resolve(email);
-        }
-        else {
-            reject('invalid email')
-        }
-    });
 }
 
 function sendDailyEmails() {
@@ -123,7 +109,7 @@ function sendDailyEmails() {
                                     if (error) {
                                         console.log(error);
                                     } else {
-                                        console.log('Email sent: ' + info.response);
+                                        console.log('Sent to : ' + user.email + ', ' + info.response);
                                     }
                                 });
                         }).catch(err => console.log(err));
