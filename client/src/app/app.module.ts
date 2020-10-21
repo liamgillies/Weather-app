@@ -42,6 +42,7 @@ import { UnsubscribeComponent } from './unsubscribe/unsubscribe.component';
     FormsModule,
     HttpClientModule,
     Nl2BrPipeModule,
+    CommonModule,
   ],
   providers: [Nl2BrPipeModule],
   bootstrap: [AppComponent]
