@@ -43,37 +43,19 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
               this.time = ((this.date.c.hour * 60 + this.date.c.minute) * 100) / 1440;
               // format date to be displayed
               this.displayDate = this.getDisplayDate();
-
-              this.jsonReaderService.getNextTwelveHours().then(() => {
-                // dynamic background images and high/low text
-                this.nextTwelveHours = this.jsonReaderService.nextTwelveHours;
-                this.icon = this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast;
-                this.isDayTime = this.jsonReaderService.hourlyJSON.properties.periods[0].isDaytime;
-                this.highLow = this.jsonReaderService.getHighLow();
-                console.log(this.jsonReaderService.hourlyJSON);
-                if (this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast.toLocaleLowerCase().includes('sun')) {
-                  this.isSun = true;
-                }
-                else if (this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast.toLocaleLowerCase().includes('rain') ||
-                this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast.toLowerCase().includes('thunder')) {
-                  this.isRain = true;
-                }
-                else if (this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast.toLocaleLowerCase().includes('snow')) {
-                  this.isSnow = true;
-                }
-                this.missing = (!this.isRain && !this.isSnow && !this.isSun);
-                console.log(this.jsonReaderService.weatherJSON);
-              });
           });
         }
       );
     });
 
-    // update time and date
+    // initial render of images & background
+    this.renderNextTwelveHours();
+
+    // update time, date, and hourly boxes
     this.interval = setInterval(() => {
       this.time = ((this.date.c.hour * 60 + this.date.c.minute) * 100) / 1440;
       this.displayDate = this.getDisplayDate();
-      this.nextTwelveHours = this.jsonReaderService.nextTwelveHours;
+      this.renderNextTwelveHours();
     }, 30000);
   }
 
@@ -109,6 +91,7 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
 
   // get time for progress bar
   getDisplayDate(): string {
+    this.date = DateTime.local().setZone(this.jsonReaderService.weatherJSON.properties.timeZone);
     const singleMinDigit = this.date.c.minute.toString().length === 1;
     if (this.date.c.hour < 12 && this.date.c.hour > 0) {
       if (singleMinDigit) {
@@ -134,6 +117,32 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
         return '12:' + this.date.c.minute + ' AM';
       }
     }
+  }
+
+  renderNextTwelveHours(): void {
+    this.jsonReaderService.getLocation().then(res => {
+      this.jsonReaderService.getInitialJson(res).then(() => {
+        this.jsonReaderService.getHourly(this.jsonReaderService.weatherJSON).then(() => {
+          this.jsonReaderService.getNextTwelveHours().then(() => {
+            // dynamic background images and high/low text
+            this.nextTwelveHours = this.jsonReaderService.nextTwelveHours;
+            this.icon = this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast;
+            this.isDayTime = this.jsonReaderService.hourlyJSON.properties.periods[0].isDaytime;
+            this.highLow = this.jsonReaderService.getHighLow();
+            console.log(this.jsonReaderService.hourlyJSON);
+            if (this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast.toLocaleLowerCase().includes('sun')) {
+              this.isSun = true;
+            } else if (this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast.toLocaleLowerCase().includes('rain') ||
+              this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast.toLowerCase().includes('thunder')) {
+              this.isRain = true;
+            } else if (this.jsonReaderService.hourlyJSON.properties.periods[0].shortForecast.toLocaleLowerCase().includes('snow')) {
+              this.isSnow = true;
+            }
+            this.missing = (!this.isRain && !this.isSnow && !this.isSun);
+          });
+        });
+      });
+    });
   }
 
   // get city name and refresh
