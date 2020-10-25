@@ -53,8 +53,14 @@ export class SubscribeComponent implements OnInit {
     this.button.classList.add('green');
     this.button.classList.remove('btn-primary');
     this.button.innerHTML = 'Success!';
+
+    setTimeout(() => {
+      this.button.classList.add('btn-primary');
+      this.button.classList.remove('green');
+      this.button.innerHTML = 'Submit';
+    }, 1500);
+
     console.log('submitted');
-    console.log(this.timeZone);
 
     this.emailService.addEmail(
       {email: this.emailForm.controls.email.value,

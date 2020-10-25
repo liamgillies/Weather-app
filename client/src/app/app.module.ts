@@ -17,6 +17,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import { UnsubscribeComponent } from './unsubscribe/unsubscribe.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
@@ -27,6 +29,8 @@ import { UnsubscribeComponent } from './unsubscribe/unsubscribe.component';
     WeatherCardTodayComponent,
     SubscribeComponent,
     UnsubscribeComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

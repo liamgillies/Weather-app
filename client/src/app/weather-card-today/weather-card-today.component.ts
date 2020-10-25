@@ -101,7 +101,7 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
         return this.date.c.hour + ':' + this.date.c.minute + ' AM';
       }
     }
-    else if (this.date.c.hour > 0) {
+    else if (this.date.c.hour > 1) {
       if (singleMinDigit) {
         return (this.date.c.hour - 12) + ':0' + this.date.c.minute + ' PM';
       }
