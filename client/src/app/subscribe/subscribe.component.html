@@ -1,32 +1,32 @@
 <div class="bg-image">
-<div class="container">
-  <div class="section">
-    <form [formGroup]="emailForm" (ngSubmit)="addEmail()">
-      <div class="header">
-        Subscribe to receive daily/weekly <br/> weather reports in your current location.
-      </div>
-      <label id="text-label" for="text">Email</label>
-      <br/>
-      <input id="text" type="text" formControlName="email" required>
-      <div id="invalid-email" class="hidden">Invalid email</div>
-      <br/>
-      <br/>
-      <div id="daily-label">Daily Reports</div>
-      <label class="switch">
-        <input class="checkbox1" type="checkbox" (click)="dailyClicked()" checked>
-        <span class="slider round"></span>
-      </label>
-      <br/>
-      <br/>
-      <div id="weekly-label">Weekly Reports</div>
-      <label class="switch">
-        <input class="checkbox1" type="checkbox" (click)="weeklyClicked()" checked>
-        <span class="slider round"></span>
-      </label>
-      <br/>
-      <br/>
-      <button id="submit" class="btn btn-primary" type="submit" [disabled]="!emailForm.valid">Submit</button>
-    </form>
+  <div class="container">
+    <div class="section">
+      <form [formGroup]="emailForm" (ngSubmit)="addEmail()">
+        <div class="header">
+          Subscribe to receive daily/weekly <br/> weather reports in your current location.
+        </div>
+        <label id="text-label" for="text">Email</label>
+        <br/>
+        <input id="text" type="text" formControlName="email" required>
+        <div id="invalid-email" class="hidden">Invalid email</div>
+        <br/>
+        <br/>
+        <div id="daily-label">Daily Reports</div>
+        <label class="switch">
+          <input class="checkbox1" type="checkbox" (click)="dailyClicked()" checked>
+          <span class="slider round"></span>
+        </label>
+        <br/>
+        <br/>
+        <div id="weekly-label">Weekly Reports</div>
+        <label class="switch">
+          <input class="checkbox1" type="checkbox" (click)="weeklyClicked()" checked>
+          <span class="slider round"></span>
+        </label>
+        <br/>
+        <br/>
+        <button id="submit" class="btn btn-primary" type="submit" [disabled]="!emailForm.valid">Submit</button>
+      </form>
+    </div>
   </div>
-</div>
 </div>
