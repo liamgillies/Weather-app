@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {UserService} from '../_services/user-service';
-import {CommonModule} from '@angular/common';
+import {AuthService} from '../_services/auth-service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -15,8 +15,14 @@ export class RegisterComponent implements OnInit {
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     email: new FormControl('', [Validators.email]),
   });
-  private submitted = false;
-  constructor(private userService: UserService) { }
+  public submitted = false;
+  public usernameTaken: boolean;
+  constructor(private authService: AuthService,
+              private router: Router) {
+    if (this.authService.getCurrentUserValue()) {
+      this.router.navigate(['/today']);
+    }
+  }
 
   ngOnInit(): void {
   }
@@ -26,12 +32,20 @@ export class RegisterComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-    console.log('registering');
-    this.userService.register({
+    this.authService.register({
       username: this.registerForm.controls.username.value,
       password: this.registerForm.controls.password.value,
       email: this.registerForm.controls.email.value
-    }).subscribe();
+    }).subscribe(res => {
+      // @ts-ignore
+      if (!res) {
+        this.usernameTaken = true;
+        console.log(this.usernameTaken);
+      }
+      else {
+        this.router.navigate(['/login']);
+      }
+    });
   }
 
 }
