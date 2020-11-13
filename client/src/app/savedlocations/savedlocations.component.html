@@ -1,0 +1,21 @@
+<div class="bg-image">
+  <div class="container">
+    <span *ngFor="let location of formattedLocations">
+      <div class="locations">
+        <span class="currentTemp">{{location.currentTemperature}}</span>
+        <button (click)="delete(location.count)">X</button>
+      </div>
+    </span>
+    <button class="addLocation" (click)="openForm()">+
+      <div id="popup" class="hidden">
+        <form [formGroup]="locationForm" (ngSubmit)="add()">
+          <input matInput placeholder="location" type="text" formControlName="location">
+          <span *ngIf="locationForm.controls.location.errors">
+                <div class="errors" *ngIf="submitted && locationForm.controls.location.errors.required">Location is required</div>
+          </span>
+          <button id="submit" class="btn btn-primary" type="submit">Submit</button>
+        </form>
+      </div>
+    </button>
+  </div>
+</div>
