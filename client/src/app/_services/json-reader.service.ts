@@ -19,6 +19,7 @@ export class JsonReaderService {
   public cityOutOfBounds: boolean;
   constructor() { }
 
+  // get current location json, or city json if searched
   getLocation(): Promise<string> {
       return new Promise((resolve, reject) => {
         if (!this.city) {
@@ -56,7 +57,7 @@ export class JsonReaderService {
         }
       });
     }
-
+    // get weather json
   getInitialJson(url: string): Promise<void> {
     return new Promise((resolve, reject) => {
       if (url === '') {
@@ -71,6 +72,7 @@ export class JsonReaderService {
     });
   }
 
+  // get hourly weather json
   getHourly(json: WeatherJSON): Promise<void> {
     return new Promise((resolve, reject) => {
       if (!json) {
@@ -84,7 +86,7 @@ export class JsonReaderService {
       }
     });
   }
-
+  // gets the next twelve hours of data to display
   getNextTwelveHours(): Promise<void> {
     this.nextTwelveHours = [];
     return new Promise( (resolve) => {
@@ -94,7 +96,7 @@ export class JsonReaderService {
       resolve();
     });
   }
-
+  // gets the high and low temps for the rest of the day
   getHighLow(): string {
     let min = this.hourlyJSON.properties.periods[0].temperature;
     let max = this.hourlyJSON.properties.periods[0].temperature;
@@ -109,18 +111,20 @@ export class JsonReaderService {
         return 'Today will have a high of ' + max + '\n and a low of ' + min;
       }
     }
-    return '';
+    return 'API error';
   }
 
   // Nominatim city API query
   getCityLatLong(city: string): Promise<void> {
+    this.city = city;
     this.city.replace(' ', '+');
     return new Promise((resolve, reject) => {
         fetch('https://nominatim.openstreetmap.org/?addressdetails=1&q=' + city + '&format=json&limit=1')
           .then(res => res.json())
           .then(out => {
             console.log(out);
-            resolve(this.cityJSON = out);
+            this.cityJSON = out;
+            resolve(out);
         }).catch(err => {
           reject(err);
         });
