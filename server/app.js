@@ -1,5 +1,6 @@
 const express = require('express');
 const subscribersRouter = require('./routes/subscribers.router');
+const usersRouter = require('./routes/users.router');
 const app = express();
 const mongoose = require('mongoose')
 const cors = require('cors')
@@ -22,5 +23,5 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use('/subscribers', subscribersRouter);
-
+app.use('/users', usersRouter);
 module.exports = app;
