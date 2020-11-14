@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from '../_services/user-service';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../_services/auth-service";
-import {JsonReaderService} from "../_services/json-reader.service";
-import {JsonArray} from "@angular/compiler-cli/ngcc/src/packages/entry_point";
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from '../_services/auth-service';
+import {JsonReaderService} from '../_services/json-reader.service';
+import {JsonArray} from '@angular/compiler-cli/ngcc/src/packages/entry_point';
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-savedlocations',
   templateUrl: './savedlocations.component.html',
   styleUrls: ['./savedlocations.component.css']
 })
-export class SavedlocationsComponent implements OnInit {
+export class SavedlocationsComponent implements OnInit, OnDestroy {
   locationForm = new FormGroup({
     location: new FormControl('', [Validators.required])
   });
@@ -19,30 +20,68 @@ export class SavedlocationsComponent implements OnInit {
   public submitted = false;
   public form: HTMLElement;
   public formattedLocations: JsonArray = [];
+  public hidden = true;
+  public interval;
   constructor(private userService: UserService,
               private authService: AuthService,
-              private jsonReaderService: JsonReaderService) {
+              private jsonReaderService: JsonReaderService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
+    if (!this.authService.getCurrentUserValue()) {
+      this.router.navigate(['/login']);
+    }
     this.form = document.getElementById('popup') as HTMLElement;
     this.locations = this.authService.getCurrentUserValue().savedLocations;
     this.format();
-    console.log(this.formattedLocations);
+    this.interval = setInterval(() => {
+      const date = new Date(Date.now());
+      // not zero, sometimes api bugs
+      if (date.getMinutes() === 1){
+        this.format();
+      }
+    }, 60000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.interval){
+      clearInterval(this.interval);
+    }
   }
 
   openForm(): void {
-    this.form.classList.remove('hidden');
-    this.form.classList.add('location-section');
+    this.hidden = false;
+  }
+
+  closeForm(): void {
+    this.hidden = true;
+  }
+
+  routeLocation(city: string): void {
+    this.router.navigate(['/today']);
+    this.jsonReaderService.city = city;
   }
 
   format(): void {
-    // get array of JSONS for formatting
+    // get array of JSONs for formatting
     // use counter for deleting locations; simulates database _id
     this.formattedLocations = [];
     let counter = 0;
     this.locations.forEach(location => {
-      const temp = {city: '', state: '', currentWeather: '', currentTemperature: '', high: '', low: '', count: counter};
+      const temp = {
+        city: '',
+        state: '',
+        currentTemperature: '',
+        high: '',
+        low: '',
+        count: counter,
+        shortForecast: '',
+        isRain: false,
+        isSnow: false,
+        isSun: false,
+        missing: false,
+      };
       fetch(location)
         .then(res => res.json())
         .then(res => {
@@ -53,7 +92,6 @@ export class SavedlocationsComponent implements OnInit {
           fetch(res.properties.forecastHourly)
             .then(res1 => res1.json())
             .then(res1 => {
-              temp.currentWeather = res1.properties.periods[0].shortForecast;
               temp.currentTemperature = res1.properties.periods[0].temperature;
               // get max and min temps for the day
               let min = res1.properties.periods[0].temperature;
@@ -70,8 +108,18 @@ export class SavedlocationsComponent implements OnInit {
                 }
               }
               temp.high = max;
-              temp.low = max;
+              temp.low = min;
 
+              // dynamic backgrounds
+              temp.shortForecast = res1.properties.periods[0].shortForecast;
+              if (temp.shortForecast.toLocaleLowerCase().includes('sun')) {
+                temp.isSun = true;
+              } else if (temp.shortForecast.toLocaleLowerCase().includes('rain') || temp.shortForecast.toLowerCase().includes('thunder')) {
+                temp.isRain = true;
+              } else if (temp.shortForecast.toLocaleLowerCase().includes('snow')) {
+                temp.isSnow = true;
+              }
+              temp.missing = (!temp.isRain && !temp.isSnow && !temp.isSun);
             });
         });
       this.formattedLocations.push(temp);
@@ -101,8 +149,8 @@ export class SavedlocationsComponent implements OnInit {
             this.authService.addLocation(res);
             this.locations = this.authService.getCurrentUserValue().savedLocations;
             this.format();
-            this.form.classList.add('hidden');
-            this.form.classList.remove('location-section');
+            console.log(this.formattedLocations);
+            this.hidden = true;
           });
       });
   }

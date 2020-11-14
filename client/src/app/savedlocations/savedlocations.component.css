@@ -4,37 +4,141 @@
 
 .bg-image {
   width: 100%;
-  height: 100vh;
-  background: url(https://www.publicdomainpictures.net/pictures/300000/velka/pixelated-background-1554863525mz3.jpg);
-  background-size: cover;
+  background: url(https://art.pixilart.com/2832dfe4ad7a93d.png);
   position: absolute;
 }
 .container {
   margin: 100px 100px 100px 100px;
-  border: 2px dotted orange;
   font-family: PixelarRegularW01-Regular;
-}
-.locations {
-  width: 100px;
-  height: 100px;
-  display: inline-block;
-  background: #2196F3;
-  margin-right: 20px;
 }
 .hidden {
   display: none;
 }
-
 .location-section {
   width: 500px;
   height: 500px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 100vmax rgba(0,0,0,.4);
   background-color: white;
 }
+.location-section .close {
+  outline: none;
+}
+.l-rain {
+  width: 250px;
+  height: 325px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 8px 30px 0 rgba(0, 0, 0, 0.25);
+  background: url(https://i.imgur.com/MpkmJUo.gif);
+  background-size: cover;
+  display: inline-block;
+  margin: 10px 10px;
+  vertical-align: top;
+  border: 1px solid white;
+  color: white;
+}
+.l-snow {
+  width: 250px;
+  height: 325px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 8px 30px 0 rgba(0, 0, 0, 0.25);
+  background: url(https://i.redd.it/ii6ml342b1541.gif);
+  background-size: cover;
+  display: inline-block;
+  margin: 10px 10px;
+  vertical-align: top;
+  border: 1px solid white;
+  color: white;
+}
+.l-sun {
+  width: 250px;
+  height: 325px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 8px 30px 0 rgba(0, 0, 0, 0.25);
+  background: url(https://64.media.tumblr.com/2d57b2a84d1d35abbff731defde7771b/tumblr_omptqtBd3D1vg9wr5o1_640.gifv);
+  background-size: cover;
+  display: inline-block;
+  margin: 10px 10px;
+  vertical-align: top;
+  border: 1px solid white;
+  color: white;
+}
+.l-missing {
+  width: 250px;
+  height: 325px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 8px 30px 0 rgba(0, 0, 0, 0.25);
+  background: url(https://i.pinimg.com/originals/c3/a5/e2/c3a5e24b3b3119903eb0f6e8ca63edba.png);
+  background-size: cover;
+  display: inline-block;
+  margin: 10px 10px;
+  vertical-align: top;
+  border: 1px solid white;
+  color: white;
+}
 .addLocation {
-  width: 100px;
-  height: 100px;
+  width: 250px;
+  height: 325px;
   border: none;
   border-radius: 10px;
   font-size: 50px;
   text-align: center;
+  margin: 10px 10px;
+  display: inline-block;
+  vertical-align: top;
+  background-color: lightyellow;
+}
+.delete {
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-size: 22px;
+  position: absolute;
+  width: 475px;
+  margin-top: -5px;
+  margin-right: -100px;
+  outline: none !important;
+}
+.location {
+  text-align: center;
+  font-size: 28px;
+}
+#plus {
+  font-size: 70px;
+  color: #373837;
+  padding: 50px;
+  transform: translateY(-10px);
+  text-align: center;
+  width: 100%;
+  display: inline-block;
+}
+.currentTemperature {
+  margin-top: 90px;
+  font-size: 56px;
+  width: 100%;
+  text-align: center;
+}
+.darken {
+  background: rgba(0, 0, 0, 0.3);
+  height: 100%;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.shortForecast {
+  font-size: 28px;
+  width: 100px;
+  height: 100px;
+}
+.shortForecast-container {
+  text-align: center;
+  width: 100%;
+}
+.high-low {
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
 }

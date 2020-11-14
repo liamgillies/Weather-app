@@ -1,21 +1,47 @@
 <div class="bg-image">
   <div class="container">
     <span *ngFor="let location of formattedLocations">
-      <div class="locations">
-        <span class="currentTemp">{{location.currentTemperature}}</span>
-        <button (click)="delete(location.count)">X</button>
+      <div [ngClass]="{'l-rain': location.isRain, 'l-sun': location.isSun, 'l-snow': location.isSnow, 'l-missing': location.missing}">
+        <button class="delete" title="Delete location" (click)="delete(location.count)">X</button>
+        <div class="darken" (click)="routeLocation(location.city)">
+          <div class="location">
+            {{location.city}}, {{location.state}}
+          </div>
+          <div class="currentTemperature">
+            <span class="temperature-text">
+              {{location.currentTemperature}} °F
+            </span>
+          </div>
+          <div class="shortForecast-container">
+            <span class="shortForecast">
+            {{location.shortForecast}}
+            </span>
+          </div>
+          <div class="high-low">
+            <div class="high">
+              High: {{location.high}} °F
+            </div>
+            <span class="low">
+              Low: {{location.low}} °F
+            </span>
+          </div>
+        </div>
       </div>
     </span>
-    <button class="addLocation" (click)="openForm()">+
-      <div id="popup" class="hidden">
+    <button class="addLocation" (click)="openForm()">
+      <span id="plus">+</span>
+    </button>
+      <div [hidden]="hidden">
+      <div id="popup" class="location-section">
         <form [formGroup]="locationForm" (ngSubmit)="add()">
-          <input matInput placeholder="location" type="text" formControlName="location">
+          <button class="close" title="Close" type="button" (click)="closeForm()">X</button>
+          <input placeholder="location" type="text" formControlName="location">
           <span *ngIf="locationForm.controls.location.errors">
                 <div class="errors" *ngIf="submitted && locationForm.controls.location.errors.required">Location is required</div>
           </span>
           <button id="submit" class="btn btn-primary" type="submit">Submit</button>
         </form>
       </div>
-    </button>
+      </div>
   </div>
 </div>
