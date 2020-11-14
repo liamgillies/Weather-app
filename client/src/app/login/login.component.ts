@@ -16,9 +16,10 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', [Validators.required])
   });
   public submitted = false;
+  public invalidCredentials = false;
   constructor(private authService: AuthService,
               private router: Router) {
-    if (this.authService.getCurrentUserValue() != null) {
+    if (this.authService.getCurrentUserValue()) {
       this.router.navigate(['/today']);
     }
   }
@@ -34,8 +35,13 @@ export class LoginComponent implements OnInit {
     this.authService.login({
       username: this.loginForm.controls.username.value,
       password: this.loginForm.controls.password.value
-    }).subscribe();
-    this.router.navigate(['/today']);
+    }).subscribe(() => {
+      this.router.navigate(['/today']);
+      this.invalidCredentials = false;
+    }, () => {
+      this.invalidCredentials = true;
+    });
+
   }
 
 }

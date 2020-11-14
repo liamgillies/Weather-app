@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {EmailService} from '../_services/email.service';
 import {JsonReaderService} from '../_services/json-reader.service';
+import {AuthService} from "../_services/auth-service";
 
 @Component({
   selector: 'app-subscribe',
@@ -19,7 +20,8 @@ export class SubscribeComponent implements OnInit {
   private button: HTMLElement;
   private invalidEmail: HTMLElement;
   constructor(private emailService: EmailService,
-              private jsonReaderService: JsonReaderService) { }
+              private jsonReaderService: JsonReaderService,
+              private authService: AuthService) { }
 
   ngOnInit(): void {
     this.jsonReaderService.city = '';

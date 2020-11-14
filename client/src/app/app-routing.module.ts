@@ -17,7 +17,8 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
   {path: 'home', component: HomeComponent},
-  {path: 'saved', component: SavedlocationsComponent}
+  {path: 'saved', component: SavedlocationsComponent},
+  {path: '**', component: WeatherCardTodayComponent}
 ];
 
 @NgModule({
