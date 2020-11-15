@@ -22,6 +22,8 @@ export class SavedlocationsComponent implements OnInit, OnDestroy {
   public formattedLocations: JsonArray = [];
   public hidden = true;
   public interval;
+  public loading = false;
+  public outOfBounds = false;
   constructor(private userService: UserService,
               private authService: AuthService,
               private jsonReaderService: JsonReaderService,
@@ -39,7 +41,7 @@ export class SavedlocationsComponent implements OnInit, OnDestroy {
       const date = new Date(Date.now());
       // not zero, sometimes api bugs
       if (date.getMinutes() === 1){
-        this.format();
+        this.format().then();
       }
     }, 60000);
   }
@@ -56,6 +58,7 @@ export class SavedlocationsComponent implements OnInit, OnDestroy {
 
   closeForm(): void {
     this.hidden = true;
+    this.loading = false;
   }
 
   routeLocation(city: string): void {
@@ -63,7 +66,7 @@ export class SavedlocationsComponent implements OnInit, OnDestroy {
     this.jsonReaderService.city = city;
   }
 
-  format(): void {
+  async format(): Promise<void> {
     // get array of JSONs for formatting
     // use counter for deleting locations; simulates database _id
     this.formattedLocations = [];
@@ -125,6 +128,7 @@ export class SavedlocationsComponent implements OnInit, OnDestroy {
       this.formattedLocations.push(temp);
       counter++;
     });
+    return;
   }
 
 
@@ -132,25 +136,39 @@ export class SavedlocationsComponent implements OnInit, OnDestroy {
     this.userService.deleteLocation(count, this.authService.getCurrentUserValue()._id).subscribe(() => {
       this.authService.removeLocation(count);
       this.locations = this.authService.getCurrentUserValue().savedLocations;
-      this.format();
-      console.log(this.formattedLocations);
+      this.format().then();
     });
   }
 
   add(): void {
     this.submitted = true;
+    if (this.locationForm.invalid) {
+      return;
+    }
+    this.loading = true;
     this.jsonReaderService.getCityLatLong(this.locationForm.controls.location.value)
-      .then(() => this.jsonReaderService.getLocation())
       .then(res => {
-        console.log(res);
-        this.userService.addLocation(res, this.authService.getCurrentUserValue()._id)
-          .subscribe(() => {
-            this.submitted = false;
-            this.authService.addLocation(res);
-            this.locations = this.authService.getCurrentUserValue().savedLocations;
-            this.format();
-            console.log(this.formattedLocations);
-            this.hidden = true;
+        // USA bounds
+        if (res[0].lat < 19.50139 || res[0].lon < -161.75583 || res[0].lat > 64.85694 || res[0].lon > -68.01197) {
+          this.outOfBounds = true;
+          this.loading = false;
+          this.submitted = false;
+          return;
+        }
+        console.log(res[0].lat);
+        this.jsonReaderService.getLocation()
+          .then(res1 => {
+            this.userService.addLocation(res1, this.authService.getCurrentUserValue()._id)
+              .subscribe(() => {
+                this.authService.addLocation(res1);
+                this.locations = this.authService.getCurrentUserValue().savedLocations;
+                this.format().then(() => {
+                  this.submitted = false;
+                  this.hidden = true;
+                  this.loading = false;
+                });
+                console.log(this.formattedLocations);
+              });
           });
       });
   }

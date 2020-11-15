@@ -3,9 +3,11 @@
 @import url(https://db.onlinewebfonts.com/c/b2e75c336df191233b3096682c9ee6be?family=PixelarRegularW01-Regular);
 
 .bg-image {
+  position: absolute;
   width: 100%;
   background: url(https://art.pixilart.com/2832dfe4ad7a93d.png);
-  position: absolute;
+  background-repeat: repeat;
+  overflow-x: hidden;
 }
 .container {
   margin: 100px 100px 100px 100px;
@@ -16,16 +18,43 @@
 }
 .location-section {
   width: 500px;
-  height: 500px;
+  height: 250px;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   box-shadow: 0 0 0 100vmax rgba(0,0,0,.4);
   background-color: white;
+  border-radius: 10px;
+}
+.input-holder {
+  margin-top: 30px;
+  width: 100%;
+  text-align: center;
+}
+.header {
+  font-size: 40px;
+  width: 100%;
+  text-align: center;
+}
+input[type=text] {
+  width: 250px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 .location-section .close {
   outline: none;
+  margin-right: 10px;
+}
+.btn-ctr {
+  margin-top: 50px;
+  width: 100%;
+  text-align: center;
+  height: 100px;
 }
 .l-rain {
   width: 250px;
@@ -71,7 +100,7 @@
   height: 325px;
   border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 8px 30px 0 rgba(0, 0, 0, 0.25);
-  background: url(https://i.pinimg.com/originals/c3/a5/e2/c3a5e24b3b3119903eb0f6e8ca63edba.png);
+  background: url(https://giffiles.alphacoders.com/209/209343.gif);
   background-size: cover;
   display: inline-block;
   margin: 10px 10px;
@@ -123,9 +152,12 @@
 }
 .darken {
   background: rgba(0, 0, 0, 0.3);
-  height: 100%;
+  width: 250px;
+  height: 325px;
   border-radius: 10px;
   cursor: pointer;
+  display: inline-block;
+  color: white;
 }
 .shortForecast {
   font-size: 28px;
@@ -141,4 +173,29 @@
   width: 100%;
   text-align: center;
   font-size: 20px;
+}
+mat-spinner {
+  position: absolute;
+  margin-top: -15px;
+  margin-left: 5px;
+}
+.btn {
+  width: 70px;
+  height: 40px;
+}
+.api-error {
+  font-size: 46px;
+  width: 100%;
+  text-align: center;
+  margin-top: 64px;
+  color: lightcoral;
+}
+.fix-margin {
+  margin: 10px 10px;
+}
+.errors {
+  color: #92001e;
+  position: absolute;
+  width: 100%;
+  text-align: center;
 }

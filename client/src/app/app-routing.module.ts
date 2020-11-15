@@ -6,8 +6,8 @@ import {SubscribeComponent} from './subscribe/subscribe.component';
 import {UnsubscribeComponent} from './unsubscribe/unsubscribe.component';
 import {RegisterComponent} from './register/register.component';
 import {LoginComponent} from './login/login.component';
-import {HomeComponent} from './home/home.component';
 import {SavedlocationsComponent} from './savedlocations/savedlocations.component';
+import {AnalyticsComponent} from './analytics/analytics.component';
 
 const routes: Routes = [
   {path: '', component: LandingComponent},
@@ -16,8 +16,8 @@ const routes: Routes = [
   {path: 'unsubscribe/:id', component: UnsubscribeComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'home', component: HomeComponent},
   {path: 'saved', component: SavedlocationsComponent},
+  {path: 'analytics', component: AnalyticsComponent},
   {path: '**', component: WeatherCardTodayComponent}
 ];
 

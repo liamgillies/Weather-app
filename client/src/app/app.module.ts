@@ -19,9 +19,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { UnsubscribeComponent } from './unsubscribe/unsubscribe.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import { HomeComponent } from './home/home.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
 import { SavedlocationsComponent } from './savedlocations/savedlocations.component';
+import { AnalyticsComponent } from './analytics/analytics.component';
 
 
 @NgModule({
@@ -34,24 +34,25 @@ import { SavedlocationsComponent } from './savedlocations/savedlocations.compone
     UnsubscribeComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent,
     SavedlocationsComponent,
+    AnalyticsComponent,
   ],
-  imports: [
-    BrowserModule,
-    MatToolbarModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    MatCardModule,
-    MatProgressBarModule,
-    CommonModule,
-    Nl2BrPipeModule,
-    MatProgressSpinnerModule,
-    ReactiveFormsModule,
-    FormsModule,
-    HttpClientModule,
-    MatFormFieldModule,
-  ],
+    imports: [
+        BrowserModule,
+        MatToolbarModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        MatCardModule,
+        MatProgressBarModule,
+        CommonModule,
+        Nl2BrPipeModule,
+        MatProgressSpinnerModule,
+        ReactiveFormsModule,
+        FormsModule,
+        HttpClientModule,
+        MatFormFieldModule,
+        MatProgressSpinnerModule,
+    ],
   providers: [Nl2BrPipeModule],
   bootstrap: [AppComponent]
 })

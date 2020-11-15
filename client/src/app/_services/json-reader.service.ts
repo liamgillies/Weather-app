@@ -57,6 +57,7 @@ export class JsonReaderService {
         }
       });
     }
+
     // get weather json
   getInitialJson(url: string): Promise<void> {
     return new Promise((resolve, reject) => {

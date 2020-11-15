@@ -1,32 +1,35 @@
 <div class="bg-image">
   <div class="container">
     <span *ngFor="let location of formattedLocations">
-      <div [ngClass]="{'l-rain': location.isRain, 'l-sun': location.isSun, 'l-snow': location.isSnow, 'l-missing': location.missing}">
-        <button class="delete" title="Delete location" (click)="delete(location.count)">X</button>
-        <div class="darken" (click)="routeLocation(location.city)">
+      <span [ngClass]="{'l-rain': location.isRain, 'l-sun': location.isSun, 'l-snow': location.isSnow, 'l-missing': location.missing}">
+        <button class="delete" [ngClass]="{'fix-margin': !location.currentTemperature}" title="Delete location" (click)="delete(location.count)">X</button>
+        <span class="darken" [ngClass]="{'fix-margin': !location.currentTemperature}" (click)="routeLocation(location.city)">
           <div class="location">
             {{location.city}}, {{location.state}}
           </div>
-          <div class="currentTemperature">
-            <span class="temperature-text">
-              {{location.currentTemperature}} °F
-            </span>
-          </div>
-          <div class="shortForecast-container">
-            <span class="shortForecast">
-            {{location.shortForecast}}
-            </span>
-          </div>
-          <div class="high-low">
-            <div class="high">
-              High: {{location.high}} °F
+          <span *ngIf="location.currentTemperature">
+            <div class="currentTemperature">
+              <span class="temperature-text">
+                {{location.currentTemperature}} °F
+              </span>
             </div>
-            <span class="low">
-              Low: {{location.low}} °F
-            </span>
-          </div>
-        </div>
-      </div>
+            <div class="shortForecast-container">
+              <span class="shortForecast">
+              {{location.shortForecast}}
+              </span>
+            </div>
+            <div class="high-low">
+              <div class="high">
+                High: {{location.high}} °F
+              </div>
+              <span class="low">
+                Low: {{location.low}} °F
+              </span>
+            </div>
+          </span>
+          <div class="api-error" *ngIf="!location.currentTemperature">API Loading...</div>
+        </span>
+      </span>
     </span>
     <button class="addLocation" (click)="openForm()">
       <span id="plus">+</span>
@@ -35,11 +38,23 @@
       <div id="popup" class="location-section">
         <form [formGroup]="locationForm" (ngSubmit)="add()">
           <button class="close" title="Close" type="button" (click)="closeForm()">X</button>
-          <input placeholder="location" type="text" formControlName="location">
-          <span *ngIf="locationForm.controls.location.errors">
-                <div class="errors" *ngIf="submitted && locationForm.controls.location.errors.required">Location is required</div>
-          </span>
-          <button id="submit" class="btn btn-primary" type="submit">Submit</button>
+          <div class="header">Add a city:</div>
+          <div class="input-holder">
+            <span style="font-size: 28px">City: </span>
+            <input placeholder="ex. mountain view" type="text" formControlName="location">
+            <span *ngIf="locationForm.controls.location.errors">
+                  <div class="errors" *ngIf="submitted && locationForm.controls.location.errors.required">Location is required</div>
+            </span>
+          </div>
+          <span class="errors" *ngIf="outOfBounds && !submitted">City out of bounds</span>
+          <div class="btn-ctr">
+            <button id="submit" class="btn btn-primary" type="submit">
+              <mat-spinner [diameter]="30" color="accent" *ngIf="loading"></mat-spinner>
+              <span *ngIf="!loading">
+                Submit
+              </span>
+            </button>
+          </div>
         </form>
       </div>
       </div>
