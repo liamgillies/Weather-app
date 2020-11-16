@@ -14,6 +14,7 @@ export class UserService {
     return this.http.post<void>(`http://localhost:4000/users/register`, user);
   }
 
+  // saved locations page
   addLocation(userLocation, id): Observable<void> {
     return this.http.post<void>(`http://localhost:4000/users/addLocation`, {location: userLocation, _id: id});
   }
@@ -22,4 +23,20 @@ export class UserService {
     return this.http.post<void>(`http://localhost:4000/users/removeLocation`, {index: count, _id: id});
   }
 
+  // about page
+  addComment(text, userID): Observable<void> {
+    return this.http.post<void>(`http://localhost:4000/users/addComment`, {comment: text, _id: userID});
+  }
+
+  getBaseComments(): Observable<Comment[]> {
+    return this.http.get<Comment[]>(`http://localhost:4000/users/getComments`);
+  }
+
+  getUserComments(userID: string): Observable<string[]> {
+    return this.http.post<string[]>(`http://localhost:4000/users/getUserComments`, {_id: userID});
+  }
+
+  deleteComment(commentID): Observable<void> {
+    return this.http.delete<void>(`http://localhost:4000/users/deleteComment/${commentID}`);
+  }
 }

@@ -4,7 +4,11 @@ module.exports = {
     authenticate,
     register,
     addLocation,
-    removeLocation
+    removeLocation,
+    addComment,
+    getBaseComments,
+    getUserComments,
+    deleteComment
 }
 
 async function authenticate(req, res, next) {
@@ -33,5 +37,29 @@ async function addLocation(req, res, next) {
 async function removeLocation(req, res, next) {
     userService.removeLocation(req)
         .then(() => res.json())
+        .catch(err => console.log(err));
+}
+
+async function addComment(req, res, next) {
+    userService.addComment(req)
+        .then(() => res.send())
+        .catch(err => console.log(err));
+}
+
+async function getBaseComments(req, res, next) {
+    userService.getBaseComments()
+        .then(comments => res.json(comments))
+        .catch(err => console.log(err));
+}
+
+async function getUserComments(req, res, next) {
+    userService.getUserComments(req)
+        .then(comments => res.send(comments))
+        .catch(err => console.log(err));
+}
+
+async function deleteComment(req, res, next) {
+    userService.deleteComment(req)
+        .then(() => res.send())
         .catch(err => console.log(err));
 }

@@ -1,0 +1,69 @@
+<div class="bg-image">
+  <div class="row">
+    <div class="column left">
+      <div class="about-text">
+        <div class="header">Welcome to Pixel Weather!</div>
+        <br/>
+        Here is the
+        <u>
+          <a href="https://github.com/liamgillies/weather-app" target="_blank">Github link</a>
+        </u>
+        if you're interested.
+        <br/>
+        <br/>
+        <div>
+          Any suggestions, comments or discussion for anything is welcome!<br/>
+          Note: You will need to create an account to comment.
+        </div>
+        <br/>
+        <br/>
+        <div>
+          Version: 1.0 <br/>
+          Last Update: N/A
+        </div>
+      </div>
+    </div>
+
+    <div class="column right">
+      <div class="right-container">
+        <div class="header">Suggestions/Feedback</div>
+        <div class="comments-container">
+          <form [formGroup]="commentForm" (ngSubmit)="addBaseComment()">
+            <textarea placeholder="Add a comment:" rows="3" formControlName="comment"></textarea>
+            <button class="btn-dark" type="submit">
+              Add comment
+            </button>
+            <span *ngIf="commentForm.controls.comment.errors">
+              <div class="errors" *ngIf="submitted">Comment is required</div>
+            </span>
+            <div class="errors" *ngIf="submitted && !loggedIn">You must log in to comment</div>
+          </form>
+
+          <div *ngFor="let comment of baseComments">
+            <div class="comment">
+              <div class="header">
+              <span class="username">
+                {{comment.username}}
+              </span>
+                <span class="date">
+                {{comment.date | date: medium}}
+              </span>
+                <span type="button" class="delete" title="Delete comment" *ngIf="comment.own" (click)="delete(comment)">X</span>
+                <span class="spacer" *ngIf="!comment.own"></span>
+                <br/>
+                <span class="text">
+                {{comment.text}}
+              </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+

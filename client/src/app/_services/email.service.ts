@@ -15,7 +15,6 @@ export class EmailService {
   }
 
   removeEmail(id): Observable<void> {
-    console.log('unsusbscribing 1 ');
     return this.http.delete<void>(`http://localhost:4000/subscribers/unsubscribe/${id}`);
   }
 

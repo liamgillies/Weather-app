@@ -1,4 +1,5 @@
 const userSchema = require('../models/user-schema')
+const commentSchema = require('../models/comments-schema')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 module.exports = {
@@ -6,7 +7,11 @@ module.exports = {
     addUser,
     authenticate,
     addLocation,
-    removeLocation
+    removeLocation,
+    addComment,
+    getBaseComments,
+    getUserComments,
+    deleteComment
 }
 async function authenticate({username, password}) {
     const user = await userSchema.findOne({username: username});
@@ -51,4 +56,28 @@ async function removeLocation(req) {
     user.savedLocations.splice(req.body.index, 1);
 
     return user.save();
+}
+
+async function addComment(req) {
+    const user = await getById(req.body._id);
+    const comment = new commentSchema();
+    comment.text = req.body.comment;
+    comment.username = user.username;
+    const newComment = new commentSchema(comment);
+    user.comments.push(comment._id)
+    await user.save();
+    return newComment.save();
+}
+
+async function getBaseComments() {
+    return await commentSchema.find({base: true});
+}
+
+async function getUserComments(req) {
+    const user = await getById(req.body._id);
+    return user.comments;
+}
+
+async function deleteComment(req) {
+    return await commentSchema.deleteOne({id: req.params._id});
 }

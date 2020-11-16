@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule} from '@angular/router';
-import {LandingComponent} from './landing/landing.component';
 import {WeatherCardTodayComponent} from './weather-card-today/weather-card-today.component';
 import {SubscribeComponent} from './subscribe/subscribe.component';
 import {UnsubscribeComponent} from './unsubscribe/unsubscribe.component';
@@ -8,9 +7,10 @@ import {RegisterComponent} from './register/register.component';
 import {LoginComponent} from './login/login.component';
 import {SavedlocationsComponent} from './savedlocations/savedlocations.component';
 import {AnalyticsComponent} from './analytics/analytics.component';
+import {AboutComponent} from './about/about.component';
 
 const routes: Routes = [
-  {path: '', component: LandingComponent},
+  {path: 'about', component: AboutComponent},
   {path: 'today', component: WeatherCardTodayComponent},
   {path: 'subscribe', component: SubscribeComponent},
   {path: 'unsubscribe/:id', component: UnsubscribeComponent},

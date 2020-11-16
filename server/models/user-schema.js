@@ -22,7 +22,9 @@ const userSchema = new Schema({
     createdDate: {
         type: Date,
         default: Date.now()
-    }
+    },
+    comments: [Schema.Types.ObjectId]
+
 });
 
 module.exports = mongoose.model("userSchema", userSchema)
