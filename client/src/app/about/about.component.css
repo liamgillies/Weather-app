@@ -15,7 +15,7 @@
   color: white;
   margin-left: 10%;
   height: 90vh;
-  border: 2px dotted orange;
+  margin-top: 20px;
 }
 a {
   color: white;
@@ -29,7 +29,6 @@ a:hover {
 }
 .left {
   width: 45%;
-  border: 1px solid red;
 }
 
 .right {
@@ -43,7 +42,7 @@ a:hover {
   clear: both;
 }
 .right-container {
-  border: 2px dotted orange;
+  margin-top: 20px;
   height: 100%;
   width: 100%;
 }

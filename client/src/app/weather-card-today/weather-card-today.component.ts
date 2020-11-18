@@ -25,10 +25,17 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
   public isSnow: boolean;
   public missing: boolean;
   public loadingCity = false;
+  public invalidCity = false;
   constructor(public jsonReaderService: JsonReaderService) {
   }
 
   ngOnInit(): void {
+    // error if api takes longer than 3 seconds to load
+    const timeout = setTimeout(() => {
+      this.invalidCity = true;
+      this.loadingCity = false;
+      this.jsonReaderService.cityOutOfBounds = false;
+    }, 3000);
     this.isRain = false;
     this.isSun = false;
     this.isSnow = false;
@@ -37,7 +44,8 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
           this.jsonReaderService.getHourly(this.jsonReaderService.weatherJSON).then(() => {
               // stop loading symbol
               this.loadingCity = false;
-
+              this.invalidCity = false;
+              clearTimeout(timeout);
               // initialize time and date for location
               this.date = DateTime.local().setZone(this.jsonReaderService.weatherJSON.properties.timeZone);
               this.time = ((this.date.c.hour * 60 + this.date.c.minute) * 100) / 1440;

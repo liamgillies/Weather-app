@@ -10,10 +10,6 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
-  register(user): Observable<void> {
-    return this.http.post<void>(`http://localhost:4000/users/register`, user);
-  }
-
   // saved locations page
   addLocation(userLocation, id): Observable<void> {
     return this.http.post<void>(`http://localhost:4000/users/addLocation`, {location: userLocation, _id: id});

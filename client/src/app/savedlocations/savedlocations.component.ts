@@ -24,6 +24,7 @@ export class SavedlocationsComponent implements OnInit, OnDestroy {
   public interval;
   public loading = false;
   public outOfBounds = false;
+  public invalidCity = false;
   constructor(private userService: UserService,
               private authService: AuthService,
               private jsonReaderService: JsonReaderService,
@@ -141,6 +142,11 @@ export class SavedlocationsComponent implements OnInit, OnDestroy {
   }
 
   add(): void {
+    const timeout = setTimeout(() => {
+      this.submitted = false;
+      this.loading = false;
+      this.invalidCity = true;
+    }, 3000);
     this.submitted = true;
     if (this.locationForm.invalid) {
       return;
@@ -153,6 +159,7 @@ export class SavedlocationsComponent implements OnInit, OnDestroy {
           this.outOfBounds = true;
           this.loading = false;
           this.submitted = false;
+          clearTimeout(timeout);
           return;
         }
         console.log(res[0].lat);
@@ -166,6 +173,8 @@ export class SavedlocationsComponent implements OnInit, OnDestroy {
                   this.submitted = false;
                   this.hidden = true;
                   this.loading = false;
+                  this.invalidCity = false;
+                  clearTimeout(timeout);
                 });
                 console.log(this.formattedLocations);
               });

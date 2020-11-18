@@ -47,6 +47,7 @@
             </span>
           </div>
           <span class="errors" *ngIf="outOfBounds && !submitted">City out of bounds</span>
+          <span class="errors" *ngIf="invalidCity && !submitted">Invalid City</span>
           <div class="btn-ctr">
             <button id="submit" class="btn btn-primary" type="submit">
               <mat-spinner [diameter]="30" color="accent" *ngIf="loading"></mat-spinner>

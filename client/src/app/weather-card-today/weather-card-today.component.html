@@ -9,7 +9,8 @@
           <form (submit)="getCityName(city.value)" onsubmit="return false">
             <label id="search-label">Search: </label>
             <input type="text" #city placeholder="ex. mountain view">
-            <label id="error-label" *ngIf="jsonReaderService.cityOutOfBounds">Please search a city inside the US</label>
+            <label class="error-label" *ngIf="jsonReaderService.cityOutOfBounds">Please search a city inside the US</label>
+            <label class="error-label" *ngIf="invalidCity">Invalid City</label>
           </form>
           <mat-spinner *ngIf="loadingCity"></mat-spinner>
           <div class="location">{{jsonReaderService.weatherJSON.properties.relativeLocation.properties.city}},
@@ -28,7 +29,7 @@
         <img *ngIf="isRain && !isSnow && isDayTime" class="weather-img" src="../../assets/rain.png">
         <img *ngIf="isRain && !isSnow && !isDayTime" class="weather-img-night" src="../../assets/rain.png">
         <img *ngIf="(isSnow && !isRain) || icon=='Slight Chance Flurries' || icon=='Chance Flurries' || icon=='Flurries Likely' || icon=='Flurries' || icon=='Blizzard' && isDayTime" class="weather-img" src="../../assets/snow.png">
-        <img *ngIf="(isSnow && !isRain) || icon=='Slight Chance Flurries' || icon=='Chance Flurries' || icon=='Flurries Likely' || icon=='Flurries' || icon=='Blizzard' && !isDayTime" class="weather-img-night" src="../../assets/snow.png">
+        <img *ngIf="(isSnow && !isRain) || icon=='Slight Chance Flurries' || icon=='Chance Flurries' || icon=='Flurries Likely' || icon=='Flurries' || icon=='Blizzard' && false" class="weather-img-night" src="../../assets/snow.png">
         <img *ngIf="isRain && isSnow && isDayTime" class="weather-img" src="../../assets/rainsnow.png">
         <img *ngIf="isRain && isSnow && !isDayTime" class="weather-img-night" src="../../assets/rainsnow.png">
         <img *ngIf="jsonReaderService.hourlyJSON.properties.periods[0].shortForecast.toLowerCase().includes('thunderstorms') && isDayTime" class="weather-img" src="../../assets/thunderday.png">
