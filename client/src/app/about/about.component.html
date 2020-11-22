@@ -48,12 +48,22 @@
                 <span class="date">
                 {{comment.date | date: medium}}
               </span>
-                <span type="button" class="delete" title="Delete comment" *ngIf="comment.own" (click)="delete(comment)">X</span>
-                <span class="spacer" *ngIf="!comment.own"></span>
-                <br/>
-                <span class="text">
+              <span type="button" class="delete" title="Delete comment" *ngIf="comment.own" (click)="delete(comment)">X</span>
+              <span class="spacer" *ngIf="!comment.own"></span>
+              <br/>
+              </div>
+              <span class="text">
                 {{comment.text}}
               </span>
+              <br/>
+              <br/>
+              <div class="likes-dislikes-ctr">
+                <span class="likes">
+                  <button [ngClass]="{'like-clicked': likeClicked || (comment.usersLiked.includes(currentUser._id) && likedFlag)}" (click)="like(comment)">Like {{comment.likes}}</button>
+                </span>
+                <span class="dislikes">
+                  <button [ngClass]="{'dislike-clicked': dislikeClicked || (comment.usersDisliked.includes(currentUser._id) && dislikedFlag)}" (click)="dislike(comment)">Dislike {{comment.dislikes}}</button>
+                </span>
               </div>
             </div>
           </div>

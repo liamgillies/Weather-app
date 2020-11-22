@@ -35,4 +35,12 @@ export class UserService {
   deleteComment(commentID): Observable<void> {
     return this.http.delete<void>(`http://localhost:4000/users/deleteComment/${commentID}`);
   }
+
+  like(cID, uID): Observable<void> {
+    return this.http.post<void>(`http://localhost:4000/users/like`, {commentID: cID, userID: uID});
+  }
+
+  dislike(cID, uID): Observable<void> {
+    return this.http.post<void>(`http://localhost:4000/users/dislike`, {commentID: cID, userID: uID});
+  }
 }

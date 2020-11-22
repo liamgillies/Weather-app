@@ -106,18 +106,17 @@ textarea::-webkit-scrollbar-thumb {
   margin-top: 10px;
   width: 90%;
   margin-left: 5%;
-  padding: 10px 10px 20px 10px;
+  padding: 10px 20px 30px 10px;
   background-color: #3b3d42;
   color: white;
   border-radius: 20px;
   text-align: left;
+  word-break: break-all;
 }
 .username {
   font-size: 16px;
-  margin-top: -10px;
-  margin-left: 5px;
-  text-align: left;
-  width: 100%;
+  margin-top: 20px;
+  float: left;
   white-space: nowrap;
 }
 .text {
@@ -125,22 +124,55 @@ textarea::-webkit-scrollbar-thumb {
   font-size: 24px;
 }
 .delete {
+  float: right;
+  margin-top: 20px;
   border: none;
   background-color: transparent;
   color: white;
   outline: none !important;
-  margin-left: 40%;
+  margin-left: 30%;
   white-space: nowrap;
   font-size: 16px;
+  display: inline-block;
 }
 .date {
-  margin-left: 22%;
   white-space: nowrap;
   font-size: 16px;
+  margin: 0 auto !important;
 }
 .header {
   margin-top: -26px;
+  text-align: center;
 }
 .spacer {
-  margin-left: 40%;
+  margin-left: 20%;
+}
+.likes {
+  display: inline-block;
+  margin-bottom: -25px;
+}
+.likes button {
+  border: none;
+  background-color: transparent;
+  color: white;
+  outline: none !important;
+}
+.dislikes {
+  display: inline-block;
+  margin-bottom: -25px;
+}
+.dislikes button {
+  border: none;
+  background-color: transparent;
+  color: white;
+  outline: none !important;
+}
+.likes-dislikes-ctr {
+  margin-bottom: -25px;
+}
+.like-clicked {
+  color: lightskyblue !important;
+}
+.dislike-clicked {
+  color: lightcoral !important;
 }

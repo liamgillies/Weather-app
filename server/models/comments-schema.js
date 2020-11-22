@@ -27,6 +27,14 @@ const commentSchema = new Schema ({
     base: {
         type: Boolean,
         default: true
+    },
+    usersLiked: {
+        type: [Schema.Types.ObjectId],
+        default: []
+    },
+    usersDisliked: {
+        type: [Schema.Types.ObjectId],
+        default: []
     }
 })
 

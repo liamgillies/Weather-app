@@ -35,7 +35,7 @@ export class WeatherCardTodayComponent implements OnInit, OnDestroy {
       this.invalidCity = true;
       this.loadingCity = false;
       this.jsonReaderService.cityOutOfBounds = false;
-    }, 3000);
+    }, 6000);
     this.isRain = false;
     this.isSun = false;
     this.isSnow = false;

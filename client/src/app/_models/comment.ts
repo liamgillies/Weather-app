@@ -9,4 +9,6 @@ export class Comment {
   replies: [];
   base: boolean;
   own: boolean;
+  usersLiked: [];
+  usersDisliked: [];
 }

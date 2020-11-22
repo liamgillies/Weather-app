@@ -1,7 +1,9 @@
-const userSchema = require('../models/user-schema')
-const commentSchema = require('../models/comments-schema')
+const userSchema = require('../models/user-schema');
+const commentSchema = require('../models/comments-schema');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
+
 module.exports = {
     getById,
     addUser,
@@ -11,7 +13,9 @@ module.exports = {
     addComment,
     getBaseComments,
     getUserComments,
-    deleteComment
+    deleteComment,
+    like,
+    dislike
 }
 async function authenticate({username, password}) {
     const user = await userSchema.findOne({username: username});
@@ -77,7 +81,54 @@ async function getUserComments(req) {
     const user = await getById(req.body._id);
     return user.comments;
 }
-
+    
 async function deleteComment(req) {
-    return await commentSchema.deleteOne({id: req.params._id});
+    const user = await userSchema.findOne({comments: mongoose.Types.ObjectId(req.params.id)});
+    // delete from user's list of comments
+    user.comments = user.comments.filter(commentID => commentID.toString() !== req.params.id.toString());
+    user.save();
+    //delete comment
+    return await commentSchema.deleteOne({_id: req.params.id});
+}
+
+async function getCommentByID(commentID) {
+    return commentSchema.findOne({_id: commentID});
+}
+
+async function like(req) {
+    // if click like again, will remove original like
+    const comment = await getCommentByID(req.body.commentID);
+    if (comment.usersLiked && comment.usersLiked.includes(req.body.userID)) {
+        comment.usersLiked = comment.usersLiked.filter(id => id.toString() !== req.body.userID.toString());
+        comment.likes--;
+        return comment.save();
+    }
+    // if user disliked, will remove dislike
+    else if (comment.usersDisliked && comment.usersDisliked.includes(req.body.userID)) {
+        comment.usersDisliked = comment.usersDisliked.filter(id => id.toString() !== req.body.userID.toString());
+        comment.dislikes--;
+    }
+    // like comment
+    comment.likes++;
+    comment.usersLiked.push(req.body.userID.toString());
+    return comment.save();
+}
+
+async function dislike(req) {
+    // if click dislike again, will remove original dislike
+    const comment = await getCommentByID(req.body.commentID);
+    if (comment.usersDisliked && comment.usersDisliked.includes(req.body.userID)) {
+        comment.usersDisliked = comment.usersDisliked.filter(id => id.toString() !== req.body.userID.toString());
+        comment.dislikes--;
+        return comment.save();
+    }
+    // if user liked, will remove like
+    else if (comment.usersLiked && comment.usersLiked.includes(req.body.userID)) {
+        comment.usersLiked = comment.usersLiked.filter(id => id.toString() !== req.body.userID.toString());
+        comment.likes--;
+    }
+    // dislike comment
+    comment.dislikes++;
+    comment.usersDisliked.push(req.body.userID.toString())
+    return comment.save();
 }
