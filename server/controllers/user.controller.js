@@ -68,12 +68,12 @@ async function deleteComment(req, res, next) {
 
 async function like(req, res, next) {
     userService.like(req)
-        .then(() => res.status(200))
+        .then(() => res.send())
         .catch(err => console.log(err));
 }
 
 async function dislike(req, res, next) {
     userService.dislike(req)
-        .then(() => res.status(200))
+        .then(() => res.send())
         .catch(err => console.log(err));
 }
