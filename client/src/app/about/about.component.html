@@ -59,10 +59,12 @@
               <br/>
               <div class="likes-dislikes-ctr">
                 <span class="likes">
-                  <button [ngClass]="{'like-clicked': likeClicked || (comment.usersLiked.includes(currentUser._id) && likedFlag)}" (click)="like(comment)">Like {{comment.likes}}</button>
+                  <button id="like" [ngClass]="{'like-clicked': getLocalStorageItem(comment._id) == 'liked' ||
+                  (comment.usersLiked.includes(currentUser._id) && !comment.likeFlag)}" (click)="like(comment)">Like {{comment.likes}}</button>
                 </span>
                 <span class="dislikes">
-                  <button [ngClass]="{'dislike-clicked': dislikeClicked || (comment.usersDisliked.includes(currentUser._id) && dislikedFlag)}" (click)="dislike(comment)">Dislike {{comment.dislikes}}</button>
+                  <button id="dislike" [ngClass]="{'dislike-clicked': getLocalStorageItem(comment._id) == 'disliked' ||
+                  (comment.usersDisliked.includes(currentUser._id) && !comment.dislikeFlag)}" (click)="dislike(comment)">Dislike {{comment.dislikes}}</button>
                 </span>
               </div>
             </div>

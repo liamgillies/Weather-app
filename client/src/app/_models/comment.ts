@@ -11,4 +11,6 @@ export class Comment {
   own: boolean;
   usersLiked: [];
   usersDisliked: [];
+  likeFlag: boolean;
+  dislikeFlag: boolean;
 }

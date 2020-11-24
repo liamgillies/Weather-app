@@ -18,11 +18,9 @@ export class AboutComponent implements OnInit {
   public submitted = false;
   public baseComments = [];
   public userComments: string[] = [];
-  public likeClicked = false;
-  public dislikeClicked = false;
   public currentUser: User;
-  public likedFlag = true;
-  public dislikedFlag = true;
+  public likeFlag = true;
+  public dislikeFlag = true;
   constructor(private authService: AuthService,
               private userService: UserService) { }
 
@@ -58,39 +56,56 @@ export class AboutComponent implements OnInit {
   }
 
   like(comment: Comment): void {
-    // @ts-ignore
-    if (!this.likeClicked && !comment.usersLiked.includes(this.currentUser._id)) {
-      this.likeClicked = true;
-      comment.likes++;
-      if (this.dislikeClicked) {
-        comment.dislikes--;
-        this.dislikeClicked = false;
+    this.userService.like(comment._id, this.currentUser._id).subscribe(() => {
+      // if already liked
+      // @ts-ignore
+      if (localStorage.getItem(comment._id) === 'liked' || (comment.usersLiked.includes(this.currentUser._id) && !comment.likeFlag)) {
+        localStorage.removeItem(comment._id);
+        comment.likes--;
+        comment.likeFlag = true;
       }
-    }
-    else {
-      this.likeClicked = false;
-      comment.likes--;
-      this.likedFlag = false;
-    }
-    this.userService.like(comment._id, this.currentUser._id).subscribe();
+      else {
+        // removes dislike
+        // @ts-ignore
+        if (localStorage.getItem(comment._id) === 'disliked' || (comment.usersDisliked.includes(this.currentUser._id) && !comment.likeFlag)) {
+          localStorage.removeItem(comment._id);
+          comment.dislikes--;
+          comment.dislikeFlag = true;
+        }
+        localStorage.setItem(comment._id, 'liked');
+        comment.likes++;
+      }
+      comment.likeFlag = true;
+    });
   }
 
   dislike(comment: Comment): void {
-    // @ts-ignore
-    if (!this.dislikeClicked && !comment.usersDisliked.includes(this.currentUser._id)) {
-      this.dislikeClicked = true;
-      comment.dislikes++;
-      if (this.likeClicked) {
-        comment.likes --;
-        this.likeClicked = false;
+    this.userService.dislike(comment._id, this.currentUser._id).subscribe(() => {
+      // if already dislikes
+      // @ts-ignore
+      if (localStorage.getItem(comment._id) === 'disliked' || (comment.usersDisliked.includes(this.currentUser._id)
+        && !comment.dislikeFlag)) {
+        localStorage.removeItem(comment._id);
+        comment.dislikes--;
+        comment.dislikeFlag = true;
       }
-    }
-    else {
-      this.dislikeClicked = false;
-      comment.dislikes--;
-      this.dislikedFlag = false;
-    }
-    this.userService.dislike(comment._id, this.currentUser._id).subscribe();
+      else {
+        // removes like
+        // @ts-ignore
+        if (localStorage.getItem(comment._id) === 'liked' || (comment.usersLiked.includes(this.currentUser._id) && !comment.dislikeFlag)) {
+          localStorage.removeItem(comment._id);
+          comment.likes--;
+          comment.likeFlag = true;
+        }
+        localStorage.setItem(comment._id, 'disliked');
+        comment.dislikes++;
+      }
+      comment.dislikeFlag = true;
+    });
+  }
+
+  public getLocalStorageItem(id: string): string {
+    return localStorage.getItem(id);
   }
 
   delete(comment: Comment): void {
