@@ -13,9 +13,13 @@ const commentSchema = new Schema ({
         type: Number,
         default: 0
     },
-    replies: {
+    replyIDs: {
         type: [Schema.Types.ObjectId],
         default: []
+    },
+    replies: {
+        type: [Schema.Types.Mixed],
+        default: [],
     },
     username: {
         type: String,

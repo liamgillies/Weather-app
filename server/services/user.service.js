@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 
 module.exports = {
-    getById,
     addUser,
     authenticate,
     addLocation,
@@ -15,14 +14,18 @@ module.exports = {
     getUserComments,
     deleteComment,
     like,
-    dislike
+    dislike,
+    addReply,
+    deleteReply
 }
+
+// authenticates user
 async function authenticate({username, password}) {
     const user = await userSchema.findOne({username: username});
     if(user && bcrypt.compareSync(password, user.hash)) {
         const {hash, ...userWithoutHash} = user.toObject();
 
-        const token = jwt.sign({abc: user._id}, 'hehe xd');
+        const token = jwt.sign({abc: user._id}, 'hehe heh hehe hehh hehe');
         return {
             ...userWithoutHash,
             token
@@ -30,10 +33,12 @@ async function authenticate({username, password}) {
     }
 }
 
+// getter for users
 async function getById(id) {
     return userSchema.findOne({_id: id});
 }
 
+// registers a user
 async function addUser(user) {
     if(await userSchema.findOne({username: user.username})) {
         return false
@@ -46,6 +51,7 @@ async function addUser(user) {
     return newUser.save();
 }
 
+// adds a saved location
 async function addLocation(req) {
     const user = await getById(req.body._id);
 
@@ -54,6 +60,7 @@ async function addLocation(req) {
     return user.save();
 }
 
+// removes a saved location
 async function removeLocation(req) {
     const user = await getById(req.body._id);
 
@@ -62,26 +69,32 @@ async function removeLocation(req) {
     return user.save();
 }
 
+// adds a base comment
 async function addComment(req) {
     const user = await getById(req.body._id);
     const comment = new commentSchema();
+
     comment.text = req.body.comment;
     comment.username = user.username;
     const newComment = new commentSchema(comment);
     user.comments.push(comment._id)
+
     await user.save();
     return newComment.save();
 }
 
+// getter for base comments
 async function getBaseComments() {
     return await commentSchema.find({base: true});
 }
 
+// getter for the user's own comments
 async function getUserComments(req) {
     const user = await getById(req.body._id);
     return user.comments;
 }
-    
+
+// delete a base comment
 async function deleteComment(req) {
     const user = await userSchema.findOne({comments: mongoose.Types.ObjectId(req.params.id)});
     // delete from user's list of comments
@@ -91,6 +104,7 @@ async function deleteComment(req) {
     return await commentSchema.deleteOne({_id: req.params.id});
 }
 
+// getter for comments
 async function getCommentByID(commentID) {
     return commentSchema.findOne({_id: commentID});
 }
@@ -111,7 +125,15 @@ async function like(req) {
     // like comment
     comment.likes++;
     comment.usersLiked.push(req.body.userID.toString());
-    return comment.save();
+    comment.save();
+
+    //if the comment liked is a reply, need to update parent
+    const parentComment = await commentSchema.findOne({replies: {$elemMatch: {_id: mongoose.Types.ObjectId(req.body.commentID)}}});
+    if(parentComment) {
+        parentComment.replies = await updateReplies(parentComment);
+        parentComment.save();
+    }
+    return;
 }
 
 async function dislike(req) {
@@ -130,5 +152,55 @@ async function dislike(req) {
     // dislike comment
     comment.dislikes++;
     comment.usersDisliked.push(req.body.userID.toString())
-    return comment.save();
+    comment.save();
+
+    //if the comment disliked is a reply, need to update parent
+    const parentComment = await commentSchema.findOne({replies: {$elemMatch: {_id: mongoose.Types.ObjectId(req.body.commentID)}}});
+    if(parentComment) {
+        parentComment.replies = await updateReplies(parentComment);
+        parentComment.save();
+    }
+    return;
+}
+
+// update the parent comment's list of replies
+async function updateReplies(parentComment) {
+    let temp = []
+    for (let id of parentComment.replyIDs) {
+        temp.push(await getCommentByID(id));
+    }
+    return temp;
+}
+
+// add a reply to a base comment
+async function addReply(req) {
+    const parentComment = await getCommentByID(req.body.commentID);
+    const user = await getById(req.body.userID);
+    const comment = new commentSchema();
+    comment.text = req.body.comment;
+    comment.username = user.username;
+    comment.base = false;
+
+    const newComment = new commentSchema(comment);
+    await newComment.save();
+
+    // add comment to the base comment's replies list
+    user.comments.push(comment._id);
+    parentComment.replyIDs.push(comment._id);
+
+    parentComment.replies = await updateReplies(parentComment);
+
+    await parentComment.save();
+    await user.save();
+    return newComment;
+}
+
+async function deleteReply(req) {
+    const parentComment = await commentSchema.findOne({replies: {$elemMatch: {_id: mongoose.Types.ObjectId(req.params.id)}}});
+    // delete from parent's list of replies
+    parentComment.replies = parentComment.replies.filter(comment => comment._id.toString() !== req.params.id.toString());
+    parentComment.replyIDs = parentComment.replyIDs.filter(id => id.toString() !== req.params.id.toString());
+    parentComment.save();
+    //delete comment
+    return await commentSchema.deleteOne({_id: req.params.id});
 }
