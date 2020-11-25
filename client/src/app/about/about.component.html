@@ -42,30 +42,84 @@
           <div *ngFor="let comment of baseComments">
             <div class="comment">
               <div class="header">
-              <span class="username">
-                {{comment.username}}
-              </span>
+                <span class="username">
+                  {{comment.username}}
+                </span>
                 <span class="date">
                 {{comment.date | date: medium}}
-              </span>
-              <span type="button" class="delete" title="Delete comment" *ngIf="comment.own" (click)="delete(comment)">X</span>
-              <span class="spacer" *ngIf="!comment.own"></span>
-              <br/>
+                </span>
+                <span type="button" class="delete" title="Delete comment" *ngIf="comment.own" (click)="deleteComment(comment)">X</span>
+                <span class="spacer" *ngIf="!comment.own"></span>
+                <br/>
               </div>
               <span class="text">
                 {{comment.text}}
               </span>
               <br/>
               <br/>
-              <div class="likes-dislikes-ctr">
-                <span class="likes">
-                  <button id="like" [ngClass]="{'like-clicked': getLocalStorageItem(comment._id) == 'liked' ||
+              <div class="bottom-ctr">
+                <span>
+                  <button [ngClass]="{'like-clicked': getLocalStorageItem(comment._id) == 'liked' ||
                   (comment.usersLiked.includes(currentUser._id) && !comment.likeFlag)}" (click)="like(comment)">Like {{comment.likes}}</button>
                 </span>
-                <span class="dislikes">
-                  <button id="dislike" [ngClass]="{'dislike-clicked': getLocalStorageItem(comment._id) == 'disliked' ||
+                <span>
+                  <button [ngClass]="{'dislike-clicked': getLocalStorageItem(comment._id) == 'disliked' ||
                   (comment.usersDisliked.includes(currentUser._id) && !comment.dislikeFlag)}" (click)="dislike(comment)">Dislike {{comment.dislikes}}</button>
                 </span>
+                <span>
+                  <button class="reply" (click)="reply(comment)">Reply</button>
+                </span>
+                <span *ngIf="comment.replies.length > 0">
+                  <button *ngIf="!comment.showReplies" (click)="loadReplies(comment)">View replies ({{comment.replies.length}})</button>
+                  <button *ngIf="comment.showReplies" (click)="hideReplies(comment)">Hide replies</button>
+                </span>
+
+              </div>
+            </div>
+            <form *ngIf="comment.showReplyForm" [formGroup]="commentForm" (ngSubmit)="addReply(comment)">
+              <textarea placeholder="Add a reply:" rows="3" formControlName="comment"></textarea>
+              <button class="btn-dark" type="submit">
+                Add reply
+              </button>
+              <span *ngIf="commentForm.controls.comment.errors">
+                <div class="errors" *ngIf="submitted">Comment is required</div>
+              </span>
+              <div class="errors" *ngIf="submitted && !loggedIn">You must log in to comment</div>
+            </form>
+
+
+
+            <div *ngIf="comment.showReplies">
+              <div *ngFor="let reply of comment.replies">
+                <div class="reply">
+                  <div class="header">
+                    <span class="username">
+                      {{reply.username}}
+                    </span>
+                    <span class="date">
+                      {{reply.date | date: medium}}
+                    </span>
+                    <span type="button" class="delete" title="Delete comment" *ngIf="reply.own" (click)="deleteReply(reply)">X</span>
+                    <span class="spacer" *ngIf="!reply.own"></span>
+                    <br/>
+                    </div>
+                    <span class="text">
+                      {{reply.text}}
+                    </span>
+                    <br/>
+                    <br/>
+                    <div class="bottom-ctr">
+                      <span>
+                        <button [ngClass]="{'like-clicked': getLocalStorageItem(reply._id) == 'liked' ||
+                        (reply.usersLiked.includes(currentUser._id) && !reply.likeFlag)}" (click)="like(reply)">Like {{reply.likes}}</button>
+                      </span>
+                      <span>
+                        <button [ngClass]="{'dislike-clicked': getLocalStorageItem(reply._id) == 'disliked' ||
+                        (reply.usersDisliked.includes(currentUser._id) && !reply.dislikeFlag)}" (click)="dislike(reply)">Dislike {{reply.dislikes}}</button>
+                      </span>
+                  </div>
+                  <span class="line"></span>
+                </div>
               </div>
             </div>
           </div>

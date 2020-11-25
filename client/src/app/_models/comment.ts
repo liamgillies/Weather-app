@@ -6,11 +6,13 @@ export class Comment {
   date: Date;
   likes: number;
   dislikes: number;
-  replies: [];
+  replies: Comment[];
   base: boolean;
   own: boolean;
-  usersLiked: [];
-  usersDisliked: [];
+  usersLiked: string[];
+  usersDisliked: string[];
   likeFlag: boolean;
   dislikeFlag: boolean;
+  showReplyForm: boolean;
+  showReplies: boolean;
 }

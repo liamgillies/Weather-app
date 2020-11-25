@@ -104,7 +104,7 @@ textarea::-webkit-scrollbar-thumb {
 }
 .comment {
   margin-top: 10px;
-  width: 90%;
+  width: 80%;
   margin-left: 5%;
   padding: 10px 20px 30px 10px;
   background-color: #3b3d42;
@@ -145,34 +145,43 @@ textarea::-webkit-scrollbar-thumb {
   text-align: center;
 }
 .spacer {
-  margin-left: 20%;
+  margin-left: 30%;
 }
-.likes {
+.bottom-ctr {
+  margin-bottom: -25px;
+}
+.bottom-ctr span {
   display: inline-block;
   margin-bottom: -25px;
 }
-.likes button {
+.bottom-ctr span button {
   border: none;
   background-color: transparent;
   color: white;
   outline: none !important;
-}
-.dislikes {
-  display: inline-block;
-  margin-bottom: -25px;
-}
-.dislikes button {
-  border: none;
-  background-color: transparent;
-  color: white;
-  outline: none !important;
-}
-.likes-dislikes-ctr {
-  margin-bottom: -25px;
 }
 .like-clicked {
   color: lightskyblue !important;
 }
 .dislike-clicked {
   color: lightcoral !important;
+}
+.reply {
+  margin-top: 10px;
+  width: 80%;
+  margin-left: 15%;
+  padding: 10px 20px 30px 10px;
+  background-color: #3b3d42;
+  color: white;
+  border-radius: 20px;
+  text-align: left;
+  word-break: break-all;
+}
+.line {
+  width: 3px;
+  background-color: black;
+  height: 70px;
+  float: left;
+  margin-left: -52px;
+  margin-top: -44px;
 }

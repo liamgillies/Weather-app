@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../_services/auth-service';
 import {UserService} from '../_services/user-service';
 import {Comment} from '../_models/comment';
-import {User} from "../_models/user";
+import {User} from '../_models/user';
 
 @Component({
   selector: 'app-about',
@@ -28,13 +28,17 @@ export class AboutComponent implements OnInit {
     this.loadBaseComments();
     this.loggedIn = this.authService.getCurrentUserValue() != null;
     this.currentUser = this.authService.getCurrentUserValue();
+    if (!this.currentUser) {
+      // create pseudo user to avoid errors when not logged in
+      this.currentUser = {password: '', savedLocations: [], username: '', _id: 'invalid user id'};
+    }
   }
 
   loadBaseComments(): void {
     this.userService.getBaseComments().subscribe(res => {
       this.baseComments = res;
-
-      this.loadUserComments().then(() => {
+      // register the user's own comments for deletion
+      this.getUserComments().then(() => {
         this.baseComments.forEach(comment => {
           this.userComments.forEach(id => {
             if (id === comment._id) {
@@ -46,7 +50,8 @@ export class AboutComponent implements OnInit {
     });
   }
 
-   loadUserComments(): Promise<void> {
+  // gets all of the user's comments
+   getUserComments(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       this.userService.getUserComments(this.currentUser._id).subscribe(res => {
         this.userComments = res;
@@ -55,19 +60,21 @@ export class AboutComponent implements OnInit {
     });
   }
 
+  // like a comment
   like(comment: Comment): void {
     this.userService.like(comment._id, this.currentUser._id).subscribe(() => {
       // if already liked
-      // @ts-ignore
-      if (localStorage.getItem(comment._id) === 'liked' || (comment.usersLiked.includes(this.currentUser._id) && !comment.likeFlag)) {
+      if (localStorage.getItem(comment._id) === 'liked' ||
+        (comment.usersLiked.includes(this.currentUser._id) && !comment.likeFlag)) {
         localStorage.removeItem(comment._id);
         comment.likes--;
         comment.likeFlag = true;
+        comment.dislikeFlag = true;
       }
       else {
         // removes dislike
-        // @ts-ignore
-        if (localStorage.getItem(comment._id) === 'disliked' || (comment.usersDisliked.includes(this.currentUser._id) && !comment.likeFlag)) {
+        if (localStorage.getItem(comment._id) === 'disliked' ||
+          (comment.usersDisliked.includes(this.currentUser._id) && !comment.likeFlag)) {
           localStorage.removeItem(comment._id);
           comment.dislikes--;
           comment.dislikeFlag = true;
@@ -79,20 +86,22 @@ export class AboutComponent implements OnInit {
     });
   }
 
+  // dislike a comment
   dislike(comment: Comment): void {
     this.userService.dislike(comment._id, this.currentUser._id).subscribe(() => {
       // if already dislikes
-      // @ts-ignore
-      if (localStorage.getItem(comment._id) === 'disliked' || (comment.usersDisliked.includes(this.currentUser._id)
+      if (localStorage.getItem(comment._id) === 'disliked' ||
+        (comment.usersDisliked.includes(this.currentUser._id)
         && !comment.dislikeFlag)) {
         localStorage.removeItem(comment._id);
         comment.dislikes--;
         comment.dislikeFlag = true;
+        comment.likeFlag = true;
       }
       else {
         // removes like
-        // @ts-ignore
-        if (localStorage.getItem(comment._id) === 'liked' || (comment.usersLiked.includes(this.currentUser._id) && !comment.dislikeFlag)) {
+        if (localStorage.getItem(comment._id) === 'liked' ||
+          (comment.usersLiked.includes(this.currentUser._id) && !comment.dislikeFlag)) {
           localStorage.removeItem(comment._id);
           comment.likes--;
           comment.likeFlag = true;
@@ -104,15 +113,62 @@ export class AboutComponent implements OnInit {
     });
   }
 
+  // getter for HTML
   public getLocalStorageItem(id: string): string {
     return localStorage.getItem(id);
   }
 
-  delete(comment: Comment): void {
+  // open reply form
+  reply(comment: Comment): void {
+    comment.showReplyForm = true;
+  }
+
+  // add a reply to a comment
+  addReply(comment: Comment): void {
+    this.userService.addReply(comment._id, this.currentUser._id, this.commentForm.controls.comment.value).subscribe(c => {
+      comment.showReplyForm = false;
+      this.loadReplies(comment);
+      // @ts-ignore, display comment on frontend
+      comment.replies.push(c);
+    });
+  }
+
+  // load the replies of a comment
+  loadReplies(comment: Comment): void {
+    comment.showReplies = true;
+    console.log(comment.replies);
+    this.getUserComments().then(() => {
+      comment.replies.forEach((reply: Comment) => {
+        this.userComments.forEach(id => {
+          if (id === reply._id) {
+            reply.own = true;
+          }
+        });
+      });
+    });
+  }
+
+  // hide the replies
+  hideReplies(comment: Comment): void {
+    comment.showReplies = false;
+  }
+
+  // delete a base comment
+  deleteComment(comment: Comment): void {
     comment.text = '[deleted]';
     comment.username = '[deleted]';
     comment.date = null;
     this.userService.deleteComment(comment._id).subscribe(() => {
+      this.loadBaseComments();
+    });
+  }
+
+  // delete a reply to a comment
+  deleteReply(reply: Comment): void {
+    reply.text = '[deleted]';
+    reply.username = '[deleted]';
+    reply.date = null;
+    this.userService.deleteReply(reply._id).subscribe(() => {
       this.loadBaseComments();
     });
   }
