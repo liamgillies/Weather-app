@@ -25,11 +25,15 @@ export class UserService {
   }
 
   getBaseComments(): Observable<Comment[]> {
-    return this.http.get<Comment[]>(`http://localhost:4000/users/getComments`);
+    return this.http.get<Comment[]>(`http://localhost:4000/users/getBaseComments`);
   }
 
   getUserComments(userID: string): Observable<string[]> {
     return this.http.post<string[]>(`http://localhost:4000/users/getUserComments`, {_id: userID});
+  }
+
+  getAllComments(): Observable<Comment[]> {
+    return this.http.get<Comment[]>(`http://localhost:4000/users/getAllComments`);
   }
 
   deleteComment(commentID): Observable<void> {

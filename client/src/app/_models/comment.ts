@@ -6,6 +6,7 @@ export class Comment {
   date: Date;
   likes: number;
   dislikes: number;
+  replyIDs: string[];
   replies: Comment[];
   base: boolean;
   own: boolean;

@@ -21,6 +21,8 @@ export class AboutComponent implements OnInit {
   public currentUser: User;
   public likeFlag = true;
   public dislikeFlag = true;
+  public allComments = [];
+  public username = 'asdfasd';
   constructor(private authService: AuthService,
               private userService: UserService) { }
 
@@ -36,6 +38,10 @@ export class AboutComponent implements OnInit {
 
   loadBaseComments(): void {
     this.userService.getBaseComments().subscribe(res => {
+      // @ts-ignore, sort by likes
+      res.sort((a: Comment, b: Comment) => {
+        return (b.likes - b.dislikes) - (a.likes - a.dislikes);
+      });
       this.baseComments = res;
       // register the user's own comments for deletion
       this.getUserComments().then(() => {
@@ -55,6 +61,16 @@ export class AboutComponent implements OnInit {
     return new Promise<void>((resolve, reject) => {
       this.userService.getUserComments(this.currentUser._id).subscribe(res => {
         this.userComments = res;
+        resolve();
+      });
+    });
+  }
+
+  // gets all comments, currently unused
+  getAllComments(): Promise<void> {
+    return new Promise<void>(resolve => {
+      this.userService.getAllComments().subscribe(res => {
+        this.allComments = res;
         resolve();
       });
     });
@@ -119,24 +135,58 @@ export class AboutComponent implements OnInit {
   }
 
   // open reply form
-  reply(comment: Comment): void {
+  replyClicked(comment: Comment): void {
+    // close all other reply forms
+    this.baseComments.forEach(baseComment => {
+      baseComment.replies.forEach(reply => reply.showReplyForm = false);
+      baseComment.showReplyForm = false;
+    });
+    // set text to username of person clicked
+    this.username = comment.username + ' ';
     comment.showReplyForm = true;
   }
 
   // add a reply to a comment
   addReply(comment: Comment): void {
-    this.userService.addReply(comment._id, this.currentUser._id, this.commentForm.controls.comment.value).subscribe(c => {
-      comment.showReplyForm = false;
-      this.loadReplies(comment);
-      // @ts-ignore, display comment on frontend
-      comment.replies.push(c);
+    this.submitted = true;
+    if (!this.currentUser) {
+      this.loggedIn = false;
+      return;
+    }
+    else if (!this.commentForm.invalid) {
+      let tempBaseComment = comment;
+      // if replying to a reply, reply to base comment instead
+      this.baseComments.forEach(baseComment => {
+        if (baseComment.replyIDs.includes(comment._id)) {
+          tempBaseComment = baseComment;
+        }
+      });
+      this.userService.addReply(tempBaseComment._id, this.currentUser._id, this.commentForm.controls.comment.value).subscribe(c => {
+        // close all reply forms
+        this.baseComments.forEach(baseComment => {
+          baseComment.replies.forEach(reply => reply.showReplyForm = false);
+          baseComment.showReplyForm = false;
+        });
+        if (tempBaseComment.base) {
+          this.loadReplies(comment);
+        }
+        // @ts-ignore, display comment on frontend
+        tempBaseComment.replies.push(c);
+      });
+    }
+  }
+
+  // closes reply form
+  closeForm(): void {
+    this.baseComments.forEach(baseComment => {
+      baseComment.replies.forEach(reply => reply.showReplyForm = false);
+      baseComment.showReplyForm = false;
     });
   }
 
   // load the replies of a comment
   loadReplies(comment: Comment): void {
     comment.showReplies = true;
-    console.log(comment.replies);
     this.getUserComments().then(() => {
       comment.replies.forEach((reply: Comment) => {
         this.userComments.forEach(id => {
@@ -179,9 +229,11 @@ export class AboutComponent implements OnInit {
       this.loggedIn = false;
       return;
     }
-    this.userService.addComment(this.commentForm.controls.comment.value,
-      this.currentUser._id).subscribe(() => {
+    else if (!this.commentForm.invalid) {
+      this.userService.addComment(this.commentForm.controls.comment.value,
+        this.currentUser._id).subscribe(() => {
         this.loadBaseComments();
-    });
+      });
+    }
   }
 }

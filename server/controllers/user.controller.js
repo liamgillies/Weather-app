@@ -12,7 +12,8 @@ module.exports = {
     like,
     dislike,
     addReply,
-    deleteReply
+    deleteReply,
+    getAllComments
 }
 
 async function authenticate(req, res, next) {
@@ -58,6 +59,12 @@ async function getBaseComments(req, res, next) {
 
 async function getUserComments(req, res, next) {
     userService.getUserComments(req)
+        .then(comments => res.send(comments))
+        .catch(err => console.log(err));
+}
+
+async function getAllComments(req, res, next) {
+    userService.getAllComments()
         .then(comments => res.send(comments))
         .catch(err => console.log(err));
 }

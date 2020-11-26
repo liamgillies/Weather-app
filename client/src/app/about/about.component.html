@@ -67,7 +67,7 @@
                   (comment.usersDisliked.includes(currentUser._id) && !comment.dislikeFlag)}" (click)="dislike(comment)">Dislike {{comment.dislikes}}</button>
                 </span>
                 <span>
-                  <button class="reply" (click)="reply(comment)">Reply</button>
+                  <button class="reply" (click)="replyClicked(comment)">Reply</button>
                 </span>
                 <span *ngIf="comment.replies.length > 0">
                   <button *ngIf="!comment.showReplies" (click)="loadReplies(comment)">View replies ({{comment.replies.length}})</button>
@@ -77,10 +77,11 @@
               </div>
             </div>
             <form *ngIf="comment.showReplyForm" [formGroup]="commentForm" (ngSubmit)="addReply(comment)">
-              <textarea placeholder="Add a reply:" rows="3" formControlName="comment"></textarea>
-              <button class="btn-dark" type="submit">
-                Add reply
-              </button>
+              <textarea [(ngModel)]="username" name="username" placeholder="Add a reply:" rows="3" formControlName="comment"></textarea>
+              <div class="btn-group">
+                <button class="btn-dark half" type="submit">Add reply</button>
+                <button class="btn-dark half" type="button" (click)="closeForm()">Cancel</button>
+              </div>
               <span *ngIf="commentForm.controls.comment.errors">
                 <div class="errors" *ngIf="submitted">Comment is required</div>
               </span>
@@ -117,9 +118,23 @@
                         <button [ngClass]="{'dislike-clicked': getLocalStorageItem(reply._id) == 'disliked' ||
                         (reply.usersDisliked.includes(currentUser._id) && !reply.dislikeFlag)}" (click)="dislike(reply)">Dislike {{reply.dislikes}}</button>
                       </span>
-                  </div>
+                      <span>
+                        <button class="reply" (click)="replyClicked(reply)">Reply</button>
+                      </span>
+                    </div>
                   <span class="line"></span>
                 </div>
+                <form *ngIf="reply.showReplyForm" [formGroup]="commentForm" (ngSubmit)="addReply(comment)">
+                  <textarea [(ngModel)]="username" name="username" placeholder="Add a reply:" rows="3" formControlName="comment"></textarea>
+                  <div class="btn-group">
+                    <button class="btn-dark half" type="submit">Add reply</button>
+                    <button class="btn-dark half" type="button" (click)="closeForm()">Cancel</button>
+                  </div>
+                  <span *ngIf="commentForm.controls.comment.errors">
+                    <div class="errors" *ngIf="submitted">Comment is required</div>
+                  </span>
+                  <div class="errors" *ngIf="submitted && !loggedIn">You must log in to comment</div>
+                </form>
               </div>
             </div>
           </div>

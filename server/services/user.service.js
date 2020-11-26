@@ -16,7 +16,8 @@ module.exports = {
     like,
     dislike,
     addReply,
-    deleteReply
+    deleteReply,
+    getAllComments
 }
 
 // authenticates user
@@ -94,14 +95,28 @@ async function getUserComments(req) {
     return user.comments;
 }
 
+// get all comments
+async function getAllComments() {
+    return await commentSchema.find({});
+}
+
 // delete a base comment
 async function deleteComment(req) {
     const user = await userSchema.findOne({comments: mongoose.Types.ObjectId(req.params.id)});
     // delete from user's list of comments
     user.comments = user.comments.filter(commentID => commentID.toString() !== req.params.id.toString());
     user.save();
-    //delete comment
-    return await commentSchema.deleteOne({_id: req.params.id});
+    //delete comment if no children, else leave children and show text as deleted
+    const comment = await getCommentByID(req.params.id);
+    if(comment.replies.length === 0) {
+        return await commentSchema.deleteOne({_id: req.params.id});
+    }
+    else {
+        comment.text = '[deleted]';
+        comment.username = '[deleted]';
+        comment.date = null;
+        comment.save();
+    }
 }
 
 // getter for comments

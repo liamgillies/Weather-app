@@ -58,7 +58,6 @@ a:hover {
   width: 90%;
   height: 78vh;
   background-color: #cccccc;
-  border-radius: 5px;
   overflow-y: scroll;
 }
 .comments-container::-webkit-scrollbar {
@@ -82,7 +81,6 @@ textarea {
   width: 100%;
   font-size: 18px;
   resize: none;
-  border-radius: 5px;
 }
 textarea::-webkit-scrollbar {
   width: 10px;
@@ -109,7 +107,6 @@ textarea::-webkit-scrollbar-thumb {
   padding: 10px 20px 30px 10px;
   background-color: #3b3d42;
   color: white;
-  border-radius: 20px;
   text-align: left;
   word-break: break-all;
 }
@@ -173,7 +170,6 @@ textarea::-webkit-scrollbar-thumb {
   padding: 10px 20px 30px 10px;
   background-color: #3b3d42;
   color: white;
-  border-radius: 20px;
   text-align: left;
   word-break: break-all;
 }
@@ -184,4 +180,10 @@ textarea::-webkit-scrollbar-thumb {
   float: left;
   margin-left: -52px;
   margin-top: -44px;
+}
+.btn-group {
+  width: 100%;
+}
+.half {
+  width: 50%;
 }
