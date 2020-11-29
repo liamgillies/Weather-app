@@ -1,0 +1,8 @@
+.bg-image {
+  width: 100%;
+  height: 100vh;
+  background: url(https://i.pinimg.com/originals/f3/64/b7/f364b7d0a49566891789d291b8b2e53f.png);
+  background-size: cover;
+  font-family: PixelarRegularW01-Regular;
+  overflow-x: hidden;
+}
