@@ -15,13 +15,23 @@ router.get('/getemails', subscriberController.getEmails);
 // DELETE requests
 router.delete('/unsubscribe/:id', subscriberController.removeEmail);
 
-// timing stuff
-const dayJob = schedule.scheduleJob('0 0 */1 * * ', () => {
+// timing stuff, second - minute - hour (*/1 is every 1 hour) - day - month - day of week
+// attempt to send every hour every day
+const dayJob = schedule.scheduleJob('0 0 */1 * * *', () => {
     console.log('sending daily');
     axios.post('http://localhost:4000/subscribers/senddaily')
-        .then(res => console.log('success'))
+        .then(() => {})
         .catch(err => console.log(err))
 });
 dayJob.schedule();
+
+// attempt to send every hour on sundays 0 0 */1 * * 7
+const weekJob = schedule.scheduleJob('0 0 */1 * * 7', () => {
+    console.log('sending weekly');
+    axios.post('http://localhost:4000/subscribers/sendweekly')
+        .then(() => {})
+        .catch(err => console.log(err));
+})
+weekJob.schedule();
 
 module.exports = router;

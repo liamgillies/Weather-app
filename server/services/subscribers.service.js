@@ -18,12 +18,6 @@ const weeklyTransporter = nodemailer.createTransport({
     }
 });
 
-const weeklyMailOptions = {
-    from: 'weeklypixelweather@gmail.com',
-    to: 'lwgillies@gmail.com',
-    subject: 'Weekly Weather Report',
-    text: 'this is a weekly email'
-}
 module.exports = {
     getEmails,
     sendDailyEmails,
@@ -34,8 +28,9 @@ function sendDailyEmails() {
     emailSchema.find({daily: true}, (err, users) => {
         if(err) throw new Error(err);
         users.map(user => {
+            // send email if it's 12AM in users timezone
             let d = new Date(new Date().toLocaleString("en-US", {timeZone: user.timeZone}));
-            if(d.getHours() != '00') {
+            if(d.getHours().toString() === '00') {
                 fetch(user.url)
                     .then(res => res.json())
                     .then(res => {
@@ -49,9 +44,8 @@ function sendDailyEmails() {
                                 let dict = new Map();
                                 let shortForecast = '';
                                 const t = res.properties.periods;
-
-                                let i;
-                                for (i = 1; i < 24; i++) {
+                                // get high and low temps and data for common short forecast
+                                for (let i = 1; i < 24; i++) {
                                     max = Math.max(max, t[i].temperature);
                                     min = Math.min(min, t[i].temperature);
                                     if (dict.has(t[i].shortForecast)) {
@@ -60,6 +54,7 @@ function sendDailyEmails() {
                                         dict.set(t[i].shortForecast, 1);
                                     }
                                 }
+                                // get most commonly appearing short forecast
                                 let prevMax = 0;
                                 for (let [k, v] of dict) {
                                     if (v > prevMax) {
@@ -104,7 +99,6 @@ function sendDailyEmails() {
                                     subject: 'Daily Weather Report',
                                     html: template
                                 }
-
                                 dailyTransporter.sendMail(dailyMailOptions, (error, info) => {
                                     if (error) {
                                         console.log(error);
@@ -120,13 +114,100 @@ function sendDailyEmails() {
 }
 
 function sendWeeklyEmails() {
-    weeklyTransporter.sendMail(weeklyMailOptions, (error, info) => {
-        if(error){
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    })
+    emailSchema.find({weekly: true}, (err, users) => {
+        if(err) throw new Error(err);
+        users.map(user => {
+            // send email if it is 12AM in the user's timezone
+            let d = new Date(new Date().toLocaleString("en-US", {timeZone: user.timeZone}));
+            if(d.getHours().toString() === '00') {
+                fetch(user.url)
+                    .then(res => res.json())
+                    .then(res => {
+                        const userCity = res.properties.relativeLocation.properties.city;
+                        const userState = res.properties.relativeLocation.properties.state;
+                        fetch(res.properties.forecastHourly)
+                            .then(res => res.json())
+                            .then(res => {
+                                let shortForecast = '';
+                                let max = res.properties.periods[0].temperature;
+                                let min = res.properties.periods[0].temperature;
+                                const t = res.properties.periods;
+
+                                // set days to last hour every day
+                                let days = new Map();
+                                days.set(23, "Monday");
+                                days.set(47, "Tuesday");
+                                days.set(71, "Wednesday");
+                                days.set(95, "Thursday");
+                                days.set(119, "Friday");
+                                days.set(143, "Saturday");
+
+                                let arr = [];
+
+                                let dict = new Map();
+
+                                // get data for next six days (6 * 24 = 144)
+                                for (let i = 0; i < 144; i++) {
+                                    max = Math.max(max, t[i].temperature);
+                                    min = Math.min(min, t[i].temperature);
+                                    if (dict.has(t[i].shortForecast)) {
+                                        dict[t[i].shortForecast] += 1;
+                                    } else {
+                                        dict.set(t[i].shortForecast, 1);
+                                    }
+                                    if (days.has(i)) {
+                                        // gets most common short forecast
+                                        let prevMax = 0;
+                                        for (let [k, v] of dict) {
+                                            if (v > prevMax) {
+                                                shortForecast = k;
+                                                prevMax = v;
+                                            }
+                                        }
+                                        arr.push({day: days.get(i), high: max, low: min, trend: shortForecast});
+                                        // reset variables
+                                        max = t[i+1].temperature;
+                                        min = t[i+1].temperature;
+                                        dict.clear();
+                                        shortForecast = '';
+                                    }
+                                }
+
+                                const link = `http://localhost:4200/unsubscribe/${user._id}`;
+                                const template =
+                                    `<h3>Your Location: ${userCity}, ${userState} </h3>` + '<br/>' +
+                                    arr[0].day + ': ' + 'High: ' + arr[0].high + ', ' + 'Low: ' + arr[0].low + '<br/>' +
+                                    'Trend: ' + arr[0].trend + '<br/><br/>' +
+                                    arr[1].day + ': ' + 'High: ' + arr[1].high + ', ' + 'Low: ' + arr[1].low + '<br/>' +
+                                    'Trend: ' + arr[1].trend + '<br/><br/>' +
+                                    arr[2].day + ': ' + 'High: ' + arr[2].high + ', ' + 'Low: ' + arr[2].low + '<br/>' +
+                                    'Trend: ' + arr[2].trend + '<br/><br/>' +
+                                    arr[3].day + ': ' + 'High: ' + arr[3].high + ', ' + 'Low: ' + arr[3].low + '<br/>' +
+                                    'Trend: ' + arr[3].trend + '<br/><br/>' +
+                                    arr[4].day + ': ' + 'High: ' + arr[4].high + ', ' + 'Low: ' + arr[4].low + '<br/>' +
+                                    'Trend: ' + arr[4].trend + '<br/><br/>' +
+                                    arr[5].day + ': ' + 'High: ' + arr[5].high + ', ' + 'Low: ' + arr[5].low + '<br/>' +
+                                    'Trend: ' + arr[5].trend + '<br/><br/>' +
+                                    '<a href="'+ link +'" target="_blank">Unsubscribe</a>';
+
+                                const weeklyMailOptions = {
+                                    from: 'weeklypixelweather@gmail.com',
+                                    to: user.email,
+                                    subject: 'Weekly Weather Report',
+                                    html: template
+                                }
+                                weeklyTransporter.sendMail(weeklyMailOptions, (error, info) => {
+                                    if (error) {
+                                        console.log(error);
+                                    } else {
+                                        console.log('Sent to : ' + user.email + ', ' + info.response);
+                                    }
+                                });
+                            }).catch(err => console.log(err));
+                    });
+            }
+        });
+    });
 }
 
 function getEmails() {

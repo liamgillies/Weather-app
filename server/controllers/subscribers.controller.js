@@ -13,16 +13,17 @@ function addEmail(req, res, next) {
     const w = req.body.weekly;
     const u = req.body.url;
     const t = req.body.timeZone;
-    emailSchema.findOneAndUpdate({email: result},
-        {email: result, daily: d, weekly: w, url: u, timeZone: t},
+    const e = req.body.email;
+    emailSchema.findOneAndUpdate({email: e},
+        {email: e, daily: d, weekly: w, url: u, timeZone: t},
         {upsert: true},
-        (err, result) => {
+        (err) => {
         if(err) {
-            const e = new emailSchema({email: result, daily: d, weekly: w, url: u, timeZone: t});
+            const newEmail = new emailSchema({email: result, daily: d, weekly: w, url: u, timeZone: t});
             console.log(e);
-            e.save();
+            newEmail.save();
         }
-        res.json(result);
+        res.send();
     });
 }
 
@@ -38,9 +39,9 @@ function getEmails(req, res, next) {
 }
 
 function sendDailyEmails(req, res, next) {
-    res.send(subscriberService.sendDailyEmails());
+    subscriberService.sendDailyEmails();
 }
 
 function sendWeeklyEmails(req, res, next) {
-    res.send(subscriberService.sendWeeklyEmails())
+    subscriberService.sendWeeklyEmails();
 }
