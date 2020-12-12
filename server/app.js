@@ -31,12 +31,12 @@ function shouldCompress (req, res) {
   return compression.filter(req, res)
 }
 
+app.use('/', express.static(path.join(__dirname, '../client/dist/weather-app')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use('/subscribers', subscribersRouter);
 app.use('/users', usersRouter);
-app.use('/', express.static(path.join(__dirname+'../../pixel-weather/dist/pixel-weather')));
 app.use(compression({ filter: shouldCompress }))
 
 module.exports = app;
