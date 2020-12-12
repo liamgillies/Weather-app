@@ -123,9 +123,10 @@ export class JsonReaderService {
         fetch('https://nominatim.openstreetmap.org/?addressdetails=1&q=' + city + '&format=json&limit=1')
           .then(res => res.json())
           .then(out => {
-            console.log(out);
-            this.cityJSON = out;
-            resolve(out);
+            if (out) {
+              this.cityJSON = out;
+              resolve(out);
+            }
         }).catch(err => {
           reject(err);
         });
