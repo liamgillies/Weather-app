@@ -29,7 +29,7 @@ git clone https://github.com/liamgillies/pixel-weather.git
 Navigate to the client folder, install node modules, and start the server
 
 ```
-cd pixel-weather
+cd client
 
 npm i
 
